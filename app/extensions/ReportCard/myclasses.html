@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+	<div class="col-md-10 marksheet" ng-controller="MyclassesCtrl" >
+	
+
+	<div class="row " >
+		<div class="col-md-12">	
+			<div class="noprint" ng-include="'views/_menu-bookmark-course.html'" class="pull-left;"></div>
+			<div class="printonly"><h3>{{dict.classes_for}} {{data.assignedTeacher.fullname}}</h3></div>
+	    </div>
+  	</div>
+  	<div class="row" style="">
+		<div class="col-md-12">
+			<table class="table table-striped myclasses">
+				<thead>
+					<tr>
+						<th></th>
+						<th>{{dict.subject}}</th>
+						<th>{{dict.form}}</th>
+						<th>{{dict.department}}</th>
+						<th>{{dict.Class}}</th>
+						<th>{{dict.num_students}}</th>
+						<th>{{dict.teacher}}</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="marksheet in data.marksheets | orderBy:'subjectId'">
+						<td style="width:50px;padding-left:10px;">
+							<button class="btn btn-info" 
+									ng-click="open({
+										page:'teacherMarksheet',
+										courseId:marksheet._id,
+										formIndex:marksheet.formIndex,
+										deptId:marksheet.deptId,
+										groupId:marksheet.groupId,
+										subjectId:marksheet.subjectId
+									})">
+								<i class="glyphicon glyphicon-pencil"></i>
+							</button>
+						</td>
+						<td style="width:250px;">
+							<a ng-click="open({
+										page:'teacherMarksheet',
+										courseId:marksheet._id,
+										formIndex:marksheet.formIndex,
+										deptId:marksheet.deptId,
+										groupId:marksheet.groupId,
+										subjectId:marksheet.subjectId
+									})">{{lang === 'en' ? data.subjects[marksheet.subjectId].en : data.subjects[marksheet.subjectId].fr}}</a>
+						</td>
+						<td>{{lang === 'en' ? data.forms[marksheet.formIndex].nameEn : data.forms[marksheet.formIndex].nameFr}}</td>
+						<td>{{data.departments[marksheet.deptId].name}}</td>
+						<td>{{data.groups[marksheet.groupId].name}}</td>
+						<td>
+							{{getNumberOfStudents(marksheet)}} students
+						</td>
+						<td>{{Users.get(marksheet.teacherId).fullname}}</td>
+						<td class="remove">
+							<a ng-click="removeMarksheet(marksheet)">
+								<i class="glyphicon glyphicon-remove"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="jumbotron" ng-if="data['marksheets'].length < 1" 
+	     style="margin-top:20px;" >
+    	<h2 class="text-left">{{dict.welcome_to_the}} <b>{{dict.my_classes}}</b> {{dict._page}}!</h2>
+    	<p class="text-left">
+    		{{dict.select_the}} <b>{{dict.form}}</b>, <b>{{dict.department}}</b>, <b>{{dict.class}}</b>, and <b>{{dict.subject}}</b> {{dict.from_the_menu_above_then_click}}.
+    		<b style="color:#5CB85C;font-size:1.1em;">{{dict.add_class}}</b>.
+    	</p>
+	</div>
+	</div>
+</div>	

@@ -1,0 +1,101 @@
+<div class="row ">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+	<div class="col-md-10 marksheet" ng-controller="SalarysCtrl">
+		<div class="printonly"><h3>Salary List</h3></div>
+<nav class="navbar navbar-default" role="navigation" style="margin-bottom:10px;">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:0px;">
+			      <form name="salaryForm" class="navbar-form navbar-left" style="padding-left:0px;">
+			        <div class="form-group">
+			        	<table>
+			        		<tr class="toolbar">
+										<th>
+					    				<input 	type="text" 
+					    								class="form-control" 
+					    								placeholder="Salary Name" 
+					    								ng-model="newSalary.name"
+					    								style="width:395px;">
+					    			</th>
+					    			<th>
+					    				<div class="input-group">
+					    				  <span class="input-group-addon">Salary</span>
+					    					<input type="text"
+					    								 format="number"
+					    								 name="salaryAmount"
+					    								 ng-model="newSalary.salaryAmount"
+					    								 required
+					    							   class="form-control" 
+					    							   placeholder="SalaryAmount"
+					    							   style="width:150px;">
+					    				</div>
+					    			</th>
+					    			<th>
+					    				<div class="input-group">
+					    				  <span class="input-group-addon">Social Insurance</span>
+					    					<input type="text"
+					    								 format="number"
+					    								 name="socailinsuranceAmount"
+					    								 ng-model="newSalary.socialinsuranceAmount"
+					    								 required
+					    							   class="form-control" 
+					    							   placeholder="Social Insurance"
+					    							   style="width:150px;">
+					    				</div>
+					    			</th>
+									</tr>
+			        	</table>
+			        </div>
+			        <button type="submit" 
+		  								class="btn btn-default" 
+		  								ng-class="newSalary.isValid() && newSalary.name ? '' : 'disabled'" 
+		  								ng-click="add(newSalary)">
+			        	Add Salary
+			        </button>
+			      </form>
+			      
+			</div>
+		</div>
+	</nav>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th style="width:400px">Name</th>
+				<th>Salary Amount</th>
+				<th>Social Insurance Amount</th>
+				<th>Teachers</th>
+				<th style="width:80px;">Remove</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(salaryIndex, salary) in data.salarys">
+				<td class="column readonly" style="width:400px;vertical-align:middle;">
+					<div class="cell">{{salary.name}}</div>
+				</td>
+				<td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{salary.salaryAmount | currency:""}}</div>
+				</td>
+				<td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{salary.socialinsuranceAmount | currency:""}}</div>
+				</td>
+				<td>
+					{{salary.staffs.length}}
+				</td>
+				<td class="remove text-center" style="width:80px;">
+					<a ng-click="remove(salary)" ng-if="salary.staffs && salary.staffs.length === 0">
+						<i class="glyphicon glyphicon-remove"></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

@@ -1,0 +1,88 @@
+<div class="row">
+<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+<div class="col-md-10 marksheet" ng-controller="SchoolInfoCtrl">
+
+  <div class="row">
+  	<div class="col-md-9" style="border-right:solid 1px #ddd;">
+      <table class="table table-striped"><tr>
+        <td style="width:200px;text-align:right;"><label for="nameEn">School Name (English)</label></td>
+        <td><input id="nameEn" type="text" class="form-control" placeholder="School Name (English)" ng-model="schoolInfo.nameEn" ng-blur="save()"></input></td></tr>
+
+        <tr><td style="width:200px;text-align:right;"><label for="nameFr">School Name (French)</label></td>
+        <td><input id="nameFr" type="text" class="form-control" placeholder="School Name (French)" ng-model="schoolInfo.nameFr" ng-blur="save()"></input></td></tr>
+
+        <tr><td style="width:200px;text-align:right;"><label for="region">Region</label></td>
+          <td><div  class="btn-group">
+            <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+              {{schoolInfo.region}} <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="(regionId, version) in regions">
+                <a ng-click="schoolInfo.region = regionId; save()">
+                    {{regionId}}
+                </a>
+            </li>
+          </ul>
+          </div></td>
+        </tr>
+
+        <tr><td style="width:200px;text-align:right;"><label for="division">Division</label></td>
+        <td><input id="division" type="text" class="form-control" placeholder="Division" ng-model="schoolInfo.division" ng-blur="save()"></input></td></tr>
+
+        <tr><td style="width:200px;text-align:right;"><label for="subdivision">Subdivision</label></td>
+        <td><input id="subdivision" type="text" class="form-control" placeholder="Subdivision" ng-model="schoolInfo.subdivision" ng-blur="save()"></input></td></tr>
+
+        <tr><td style="width:200px;text-align:right;"><label for="refno">Ref No:</label></td>
+        <td><input id="refno" type="text" class="form-control" placeholder="Reference Number" ng-model="schoolInfo.refno" ng-blur="save()"></input></td></tr>
+
+        <tr><td style="width:200px;text-align:right;"><label for="principal">Name of Principal</label></td>
+        <td><input id="principal" type="text" class="form-control" placeholder="Name of Principal" ng-model="schoolInfo.principal" ng-blur="save()"></input></td></tr>
+
+        <tr><td style="width:200px;text-align:right;"><label for="year">School Year</label></td>
+        <td><input id="year" type="text" class="form-control" style="width:100px" placeholder="School Year" ng-model="schoolInfo.schoolyear" ng-blur="save()"></input></td></tr>
+
+        <tr><td style="width:200px;text-align:right;"><label>Version</label></td>
+        <td><div  class="btn-group">
+          <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+            {{schoolInfo.version}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-repeat="(versionId, version) in ['gths','ghs']">
+              <a ng-click="updateVersion(version)">
+                  {{version}}
+              </a>
+          </li>
+        </ul>
+        </div></td></tr>
+        <tr><td style="width:200px;text-align:right;"><label>Default Language</label></td>
+        <td><div  class="btn-group">
+          <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+            {{schoolInfo.lang === 'en' ? 'English' : 'French'}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-repeat="(langId, lang) in {en:'English', fr:'French'}">
+              <a ng-click="schoolInfo.lang = langId; save();">
+                  {{lang}}
+              </a>
+          </li>
+        </ul>
+        </div></td></tr>
+      </table>
+    </div>
+    <div class="col-md-3" style="text-align:center">
+      <div id="logo-image"></div>
+      <button class="btn btn-default" ng-click="uploadImage()">
+                Upload New Logo
+      </button><br><br>
+      <button class="btn btn-default" ng-click="importPrevious()">
+        Import Last Year's Data
+      </button>
+
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
+</div>
+</div>	
+

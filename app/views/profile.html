@@ -1,0 +1,244 @@
+<div class="row">
+  <div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+  <div class="col-md-10 marksheet" ng-controller="ProfileCtrl">
+  <div class="printonly"><h3>{{dict.student_profile}}</h3></div>
+
+  <table class="table"><tr>
+    <td class="col-md-7" style="border-right:solid 1px #ddd !important;">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="uid" class="col-sm-3 control-label">{{dict.student_id}}</label>
+          <div class="col-sm-9 printonly">{{data.student._id}}</div>
+          <div class="col-sm-9 noprint">
+            <div class="form-control-static">{{data.student._id}}</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="uid" class="col-sm-3 control-label">{{dict.Class}}</label>
+          <div class="col-sm-9 printonly">{{data.forms[data.student.formIndex].name}} {{data.departments[data.student.deptId].name}} 
+            {{data.groups[data.student.groupId].name}}</div>
+          <div class="col-sm-9 noprint">
+            <div class="btn-group">
+              <button class="{{editing ? '' : 'disabled'}} btn btn-sm btn-default dropdown-toggle
+                      {{showValidation && data.student.formIndex === null ? 'invalid-input' : ''}}" 
+                      data-toggle="dropdown">
+                {{data.student.formIndex || data.student.formIndex === 0 ? 
+                      (lang === 'en' ? data.forms[data.student.formIndex].nameEn : data.forms[data.student.formIndex].nameFr)
+                       : dict.select_form}}  
+                &nbsp;<span ng-if="editing" class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="(formIndex, form) in data.forms">
+                  <a ng-href="" ng-click="data.student.formIndex=formIndex">{{lang === 'en' ? form.nameEn : form.nameFr}}</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Department Dropdown -->
+            <div class="btn-group">
+              <button class="{{editing ? '' : 'disabled'}} btn btn-sm btn-default dropdown-toggle
+                {{showValidation && data.student.deptId === null ? 'invalid-input' : ''}}" data-toggle="dropdown">
+                {{data.student.deptId ? data.departments[data.student.deptId].name : dict.select_department}} 
+                &nbsp;<span ng-if="editing" class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="(deptId, dept) in data.departments">
+                  <a ng-click="data.student.deptId = deptId">{{dept.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Group Dropdown -->
+            <div class="btn-group">
+              <button class="{{editing ? '' : 'disabled'}} btn btn-sm btn-default dropdown-toggle
+                  {{showValidation && data.student.groupId === null ? 'invalid-input' : ''}}" data-toggle="dropdown">
+                {{data.student.groupId ? data.groups[data.student.groupId].name : dict.select_group}} 
+                &nbsp;<span ng-if="editing" class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="(groupId, group) in data.groups">
+                  <a ng-click="data.student.groupId = groupId">{{group.name}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" ng-controller="RegistrarProfileCtrl">
+          <label for="feeGroup" class="col-sm-3 control-label">{{dict.fee_group}}</label>
+          <div class="col-sm-9 printonly">{{data.fees[data.student.feeId].name || ""}}
+            ({{getOwed() | currency:"" || ""}})</div>
+          <div class="col-sm-9 noprint">
+            <div class="btn-group">
+              <button class="{{editing ? '' : 'disabled'}} btn btn-sm btn-default dropdown-toggle
+                {{showValidation && data.student.feeId === null ? 'invalid-input' : ''}}" 
+                      data-toggle="dropdown">
+                <span ng-if="data.student.feeGroup !== ''">
+                  {{data.student.feeId ? data.fees[data.student.feeId].name : dict.select_fee}} 
+                  <span ng-if="data.student.feeId">
+                    ({{getOwed() | currency:""}})
+                  </span>
+                </span>
+                &nbsp;<span ng-if="editing" class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="(feeKey, fee) in data.fees">
+                  <a ng-click="data.student.feeId = feeKey">
+                  {{fee.name}} ({{fee.schoolAmount + fee.ptaAmount | currency:""}})</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="studentName" class="col-sm-3 control-label">{{dict.name}}</label>
+          <div class="col-sm-9 printonly">{{data.student.name}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="studentName"
+                 class="form-control {{showValidation && data.student.name === '' ? 'invalid-input' : ''}}" 
+                 placeholder="{{dict.student_name}}"
+                 ng-readonly="!editing"
+                 ng-model="data.student.name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="birthdate" class="col-sm-3 control-label">{{dict.date_of_birth}}</label>
+          <div class="col-sm-9 printonly">{{data.student.birth | date:'dd-MM-yyyy'}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="birthdate" 
+                 class="form-control {{showValidation && data.student.birth === null ? 'invalid-input' : ''}}" 
+                 placeholder="{{dict.date_of_birth}}" 
+                 ng-model="data.student.birth"
+                 ng-readonly="!editing"
+                 type="date">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="birthplace" class="col-sm-3 control-label">{{dict.place_of_birth}}</label>
+          <div class="col-sm-9 printonly">{{data.student.birthplace}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="birthplace" 
+                 class="form-control" 
+                 placeholder="{{dict.place_of_birth}}" 
+                 ng-readonly="!editing"
+                 ng-model="data.student.birthplace">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gender" class="col-sm-3 control-label">{{dict.sex}}</label>
+          <div class="col-sm-9 printonly">{{dict[data.student.sex]}}</div>
+          <div class="col-sm-9 noprint">
+            <div class="btn-group">
+              <button class="{{editing ? '' : 'disabled'}} btn btn-sm btn-default dropdown-toggle
+                {{showValidation && data.student.sex === '' ? 'invalid-input' : ''}}" 
+                      data-toggle="dropdown">
+                <span>{{dict[data.student.sex]}}</span>
+                &nbsp;<span ng-if="editing" class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a ng-click="data.student.sex = 'Female'">{{dict.female}}</a>
+                </li>
+                <li>
+                  <a ng-click="data.student.sex = 'Male'">{{dict.male}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="parentName" class="col-sm-3 control-label">{{dict.parent_name}}</label>
+          <div class="col-sm-9 printonly">{{data.student.parentName}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="parentName" 
+                 class="form-control" 
+                 placeholder="{{dict.parent_name}}" 
+                 ng-readonly="!editing"
+                 ng-model="data.student.parentName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="residence" class="col-sm-3 control-label">{{dict.residence}}</label>
+          <div class="col-sm-9 printonly">{{data.student.residence}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="residence" 
+                 class="form-control" 
+                 placeholder="{{dict.residence}}" 
+                 ng-readonly="!editing"
+                 ng-model="data.student.residence">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="parentPhone" class="col-sm-3 control-label">{{dict.parent_phone}}</label>
+          <div class="col-sm-9 printonly">{{data.student.parentPhone}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="parentPhone"
+                 class="form-control" 
+                 placeholder="{{dict.parent_phone}}" 
+                 ng-readonly="!editing"
+                 ng-model="data.student.parentPhone">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="parentOccupation" class="col-sm-3 control-label">{{dict.parent_occupation}}</label>
+          <div class="col-sm-9 printonly">{{data.student.parentOccupation}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="parentOccupation" 
+                 class="form-control" 
+                 placeholder="{{dict.parent_occupation}}" 
+                 ng-readonly="!editing"
+                 ng-model="data.student.parentOccupation">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="parentEmail" class="col-sm-3 control-label">{{dict.parent_email}}</label>
+          <div class="col-sm-9 printonly">{{data.student.parentEmail}}</div>
+          <div class="col-sm-9 noprint">
+            <input id="parentEmail" 
+                   class="form-control pull-left" 
+               placeholder="{{dict.parent_email}}"
+               ng-readonly="!editing"
+               ng-model="data.student.parentEmail">
+          </div>
+        </div>
+        <br>
+        <div class="form-group noprint" ng-if="accessCode === 'registrar' && !editing">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-info" ng-click="edit()">
+              {{dict.edit_student}}
+            </button>
+          </div>
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-danger" ng-click="openDeleteModal()">
+              {{dict.delete_student}}
+            </button>
+          </div>
+        </div>
+        <div class="form-group noprint" ng-if="accessCode === 'registrar' && editing">
+          <div class="col-sm-offset-3 col-sm-10">
+            <button type="submit" class="btn btn-success" ng-click="save(data.student)">
+              {{dict.save_changes}}
+            </button>
+            <button type="submit" class="btn btn-warning" style="margin-left:15px;" ng-click="cancel()">
+              {{dict.cancel}}
+            </button>
+          </div>
+        </div>
+        <div class="alert alert-sm alert-warning noprint" style="height:45px;padding-top:10px;" ng-if="showValidation">
+          <i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;
+          <strong>{{dict.student_not_saved}}.</strong> {{dict.please_fill_in_all_fields}}.
+        </div>
+      </form>
+    </td>
+    <td class="col-md-5">
+    <div ng-if="accessCode === 'registrar' || accessCode ==='admin'"
+          ng-include="'extensions/Finance/_registrar-profile.html'"
+          style="border-right:solid 1px #ddd !important;"></div>
+    <div ng-if="accessCode === 'classmaster' || accessCode ==='admin'"
+          ng-include="'extensions/ReportCard/_classmaster-profile.html'"
+          style="border-right:solid 1px #ddd !important;"></div>
+    </td>
+  </tr></table>
+  </div>
+</div>

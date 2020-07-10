@@ -1,0 +1,206 @@
+<div class="row ">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+	<div class="col-md-10 marksheet" ng-controller="RegistrationCtrl">
+	<div class="printonly"><h3>{{dict.registration}}</h3></div>
+
+  <div class="row">
+  	<div class="col-md-7" style="border-right:solid 0px #ddd;">
+  		<form name="regform" class="form-horizontal form-registration" role="form">
+			  <div class="form-group">
+			    <label for="uid" class="col-sm-3 control-label">{{dict.student_id}}</label>
+			    <div class="col-sm-9">
+			      <p class="form-control-static">{{newStudent.id}}</p>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="uid" class="col-sm-3 control-label">{{dict.Class}}</label>
+			    <div class="col-sm-9">
+			      <div class="btn-group">
+					    <button class="btn btn-sm btn-default dropdown-toggle
+					    {{showValidation && newStudent.formIndex === null ? 'invalid-input' : ''}}" data-toggle="dropdown">
+					      {{newStudent.formIndex || newStudent.formIndex === 0 ? 
+					      	(lang === 'en' ? data.forms[newStudent.formIndex].nameEn : data.forms[newStudent.formIndex].nameFr) : dict.select_form}}  
+					      &nbsp;<span class="caret"></span>
+					    </button>
+					    <ul class="dropdown-menu">
+					      <li ng-repeat="(formIndex, form) in data.forms">
+					        <a ng-href="" ng-click="newStudent.formIndex=formIndex">{{lang === 'en' ? form.nameEn : form.nameFr}}</a>
+					      </li>
+					    </ul>
+					  </div>
+					  <!-- Department Dropdown -->
+					  <div class="btn-group">
+					    <button class="{{newStudent.formIndex === null ? 'disabled' : ''}} btn btn-sm btn-default dropdown-toggle
+					    {{showValidation && newStudent.deptId === null ? 'invalid-input' : ''}}" data-toggle="dropdown">
+					      {{newStudent.deptId ? data.departments[newStudent.deptId].name : dict.select_department}} 
+					      &nbsp;<span class="caret"></span>
+					    </button>
+					    <ul class="dropdown-menu">
+					      <li ng-repeat="(deptId, dept) in data.departments"
+					          ng-if="dept.forms[newStudent.formIndex] === 1">
+					        <a ng-click="newStudent.deptId = deptId">{{dept.name}}</a>
+					      </li>
+					    </ul>
+					  </div>
+			      <!-- Group Dropdown -->
+					  <div class="btn-group">
+					    <button class="{{newStudent.deptId === null ? 'disabled' : ''}} btn btn-sm btn-default dropdown-toggle
+					    {{showValidation && newStudent.groupId === null ? 'invalid-input' : ''}}" data-toggle="dropdown">
+					      {{newStudent.groupId ? data.groups[newStudent.groupId].name : dict.select_group}} 
+					      &nbsp;<span class="caret"></span>
+					    </button>
+					    <ul class="dropdown-menu">
+					      <li ng-repeat="(groupId, group) in data.groups">
+					        <a ng-click="newStudent.groupId = groupId">{{group.name}}</a>
+					      </li>
+					    </ul>
+					  </div>
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <label for="feeGroup" class="col-sm-3 control-label">{{dict.fee_group}}</label>
+			    <div class="col-sm-9">
+			    	<div class="btn-group">
+					    <button class="btn btn-sm btn-default dropdown-toggle 
+					    {{showValidation && newStudent.feeId === null ? 'invalid-input' : ''}}" data-toggle="dropdown">
+					    	<span ng-if="newStudent.feeGroup !== ''">
+					    		{{newStudent.feeId ? data.fees[newStudent.feeId].name : dict.select_fee}} 
+					    		<span ng-if="newStudent.feeId">
+						    		({{data.fees[newStudent.feeId].schoolAmount + data.fees[newStudent.feeId].ptaAmount | currency:""}})
+					    		</span>
+					    	</span>
+					      &nbsp;<span class="caret"></span>
+					    </button>
+					    <ul class="dropdown-menu">
+					      <li ng-repeat="(feeKey, fee) in data.fees">
+					        <a ng-click="newStudent.feeId = feeKey">
+					        {{fee.name}} ({{fee.schoolAmount + fee.ptaAmount | currency:""}})</a>
+					      </li>
+					    </ul>
+						</div>
+			    </div>
+			  </div>
+			  <br>
+			  <div class="form-group">
+			    <label for="studentName" class="col-sm-3 control-label">{{dict.student_name}}</label>
+			    <div class="col-sm-9">
+			      <input id="studentName"
+			      			name="studentName" 
+			      		 class="form-control {{showValidation && newStudent.name === '' ? 'invalid-input' : ''}}" 
+			      		 placeholder="{{dict.student_name}}" 
+			      		 ng-model="newStudent.name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="birthdate" class="col-sm-3 control-label">{{dict.date_of_birth}}</label>
+			    <div class="col-sm-9">
+			      <input id="birthdate" 
+			       		 class="form-control {{showValidation && newStudent.birth === null ? 'invalid-input' : ''}}" 
+			       		 placeholder="{{dict.date_of_birth}}" 
+			       		 ng-model="newStudent.birth"
+			       		 type="date">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="birthplace" class="col-sm-3 control-label">{{dict.place_of_birth}}</label>
+			    <div class="col-sm-9">
+			      <input id="birthplace" 
+			      		 class="form-control" 
+			      		 placeholder="{{dict.place_of_birth}}" 
+			      		 ng-model="newStudent.birthplace">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="sex" class="col-sm-3 control-label">{{dict.sex}}</label>
+			    <div class="col-sm-9">
+			      <div class="btn-group">
+			        <button class=" btn btn-sm btn-default dropdown-toggle 
+			        {{showValidation && newStudent.sex === '' ? 'invalid-input' : ''}}" data-toggle="dropdown">
+			          <span>{{dict[newStudent.sex] || dict.select_sex}}</span>
+			          &nbsp;<span class="caret"></span>
+			        </button>
+			        <ul class="dropdown-menu">
+			          <li>
+			            <a ng-click="newStudent.sex = 'Female'">{{dict.female}}</a>
+			          </li>
+			          <li>
+			            <a ng-click="newStudent.sex = 'Male'">{{dict.male}}</a>
+			          </li>
+			        </ul>
+			      </div>
+			    </div>
+			  </div>
+			  <br>
+			  <div class="form-group">
+			    <label for="parentName" class="col-sm-3 control-label">{{dict.parent_name}}</label>
+			    <div class="col-sm-9">
+			      <input id="parentName" 
+			      		 class="form-control" 
+			      		 placeholder="{{dict.parent_name}}" 
+			      		 ng-model="newStudent.parentName">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="residence" class="col-sm-3 control-label">{{dict.residence}}</label>
+			    <div class="col-sm-9">
+			      <input id="residence" 
+			      		 class="form-control" 
+			      		 placeholder="{{dict.residence}}" 
+			      		 ng-model="newStudent.residence">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="parentPhone" class="col-sm-3 control-label">{{dict.parent_phone}}</label>
+			    <div class="col-sm-9">
+			      <input id="parentPhone"
+			      		 class="form-control" 
+			      		 placeholder="{{dict.parent_phone}}" 
+			      		 ng-model="newStudent.parentPhone">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="parentOccupation" class="col-sm-3 control-label">{{dict.parent_occupation}}</label>
+			    <div class="col-sm-9">
+			      <input id="parentOccupation" 
+			      		 class="form-control" 
+			      		 placeholder="{{dict.parent_occupation}}" 
+			      		 ng-model="newStudent.parentOccupation">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="parentEmail" class="col-sm-3 control-label">{{dict.parent_email}}</label>
+			    <div class="col-sm-9">
+			      <input id="parentEmail" 
+			             class="form-control pull-left" 
+					     placeholder="{{dict.parent_email}}"
+					     ng-model="newStudent.parentEmail">
+			    </div>
+			  </div>
+			  <br>
+			  <div class="form-group">
+			    <div class="col-sm-offset-3 col-sm-3">
+			      <button type="submit" class="btn btn-info" ng-click="add(newStudent)">
+			        {{dict.add_student}} 
+			      </button>
+			    </div>
+			    <div class="col-sm-offset-1 col-sm-5">
+			      <button type="submit" class="btn btn-info" ng-click="clearForm(newStudent)">
+			        {{dict.clear_all}}
+			      </button>
+			    </div>
+			  </div>
+			  <div class="alert alert-sm alert-warning noprint" style="height:45px;padding-top:10px;" ng-if="showValidation">
+   				<i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;
+   				<strong>{{dict.student_not_added}}.</strong> {{dict.please_fill_in_all_fields}}.
+   			  </div>
+			</form>
+  	</div>
+  	<div class="col-md-5">
+  	</div>
+  </div>
+  </div>
+	
+</div>	
+

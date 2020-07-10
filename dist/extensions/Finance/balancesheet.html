@@ -1,0 +1,80 @@
+<div class="row">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+	<div class="col-md-10 marksheet" ng-controller="BalanceSheetCtrl">
+		<div class="printonly">
+		<center><h4>{{schoolInfo.nameEn}}</h4>
+		<h4>{{dict.balance_sheet}} ({{schoolInfo.schoolyear}} {{dict.academic_year}})</h4></center>
+		</div>
+
+	<table class="table table-striped table-finance">
+		<thead>
+			<tr>
+				<th class="title">{{dict.school_summary}}</th>
+				<th>{{dict.student}}s</th>
+				<th>{{dict.school_fee}}</th>
+				<th>{{dict.pta_fee}}</th>
+				<th>{{dict.total_fees}}</th>
+				<th>{{dict.total_paid}}</th>
+				<th>{{dict.remaining_due}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(feeKey,fee) in summary.fees">
+				<td><strong>{{fee.name}}</strong></td>
+				<td>{{fee.students}}</td>
+				<td>{{fee.schoolFee | currency:""}}</td>
+				<td>{{fee.ptaFee | currency:""}}</td>
+				<td>{{fee.owed | currency:""}}</td>
+				<td>{{fee.paid | currency:""}}</td>
+				<td>{{fee.owed - fee.paid | currency:""}}</td>
+			</tr>
+			<tr class="finance-summary success">
+				<td><strong>Total:</strong></td>
+				<td>{{totalStudents(summary.fees)}}</td>
+				<td>{{totalSchoolFee(summary.fees)| currency:""}}</td>
+				<td>{{totalPTAFee(summary.fees)| currency:""}}</td>
+				<td>{{totalOwed(summary.fees)| currency:""}}</td>
+				<td>{{totalPaid(summary.fees) | currency:""}}</td>
+				<td>{{totalOwed(summary.fees) - totalPaid(summary.fees) | currency:""}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-striped table-finance finaSchool Summary" 
+				 ng-repeat="(formIndex, form) in forms" 
+				 style="margin-top:40px;">
+		<thead>
+			<tr>
+				<th class="title">{{lang === 'en' ? form.nameEn : form.nameFr}}</th>
+				<th>{{dict.student}}s</th>
+				<th>{{dict.school_fee}}</th>
+				<th>{{dict.pta_fee}}</th>
+				<th>{{dict.total_fees}}</th>
+				<th>{{dict.total_paid}}</th>
+				<th>{{dict.remaining_due}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(feeKey,fee) in form.fees">
+				<td><strong>{{fee.name}}</strong></td>
+				<td>{{fee.students}}</td>
+				<td>{{fee.schoolFee | currency:""}}</td>
+				<td>{{fee.ptaFee | currency:""}}</td>
+				<td>{{fee.owed | currency:""}}</td>
+				<td>{{fee.paid | currency:""}}</td>
+				<td>{{fee.owed - fee.paid | currency:""}}</td>
+			</tr>
+			<tr class="finance-summary warning">
+				<td><strong>Total:</strong></td>
+				<td>{{totalStudents(form.fees)}}</td>
+				<td>{{totalSchoolFee(form.fees)| currency:""}}</td>
+				<td>{{totalPTAFee(form.fees)| currency:""}}</td>
+				<td>{{totalOwed(form.fees)| currency:""}}</td>
+				<td>{{totalPaid(form.fees) | currency:""}}</td>
+				<td>{{totalOwed(form.fees) - totalPaid(form.fees) | currency:""}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>	
+

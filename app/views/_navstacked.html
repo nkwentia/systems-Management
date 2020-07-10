@@ -1,0 +1,46 @@
+<div ng-controller="NavtabsCtrl" class="noprint">
+	<div class="row" style="margin-bottom:5px;">
+		<div class="col-md-12">
+			<div class="btn-group btn-group-justified" style="margin-right:0px;">
+				<div class="btn-group" style="margin-right:0px;">
+	        <a class="btn btn-lg btn-default btn-role dropdown-toggle" 
+	           data-toggle="dropdown">
+	          {{lang === 'en' ? User.roles[userAccess].nameEn : User.roles[userAccess].nameFr}} <span class="caret"></span>
+	        </a>
+	        <ul class="dropdown-menu" role="menu">
+	          <li ng-repeat="(accessKey, accessBool) in teacher.access" 
+				  	    ng-if="accessBool === 1"
+				  	    ng-class="accessKey === userAccess ? 'active' : ''">
+					  	<a ng-click="login(accessKey)" 
+					  	   ng-if="settings.access[accessKey] === 1">{{lang === 'en' ? User.roles[accessKey].nameEn : User.roles[accessKey].nameFr}}</a>	
+					  	<a ng-click="login(accessKey)" 
+					  	   ng-if="settings.access[accessKey] === 0"
+					  	   style="color:#999;">{{lang === 'en' ? User.roles[accessKey].nameEn : User.roles[accessKey].nameFr}}</a>
+				  	</li>
+	        </ul>
+	      </div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" style="padding-right:1px;">
+		<div class="col-md-12">
+			<div class="sidebar" >
+				<ul class="nav nav-sidebar" 
+					ng-repeat="(index, extension) in extensions"
+					ng-if="settings.extensions.indexOf(extension.name) > -1 || extension.name === 'Main'">
+<!-- 					<li class="nav-heading" ng-if="userHasAccess(extension)">
+						<i class="glyphicon" ng-class="extension.icon"></i> &nbsp;{{lang === 'en' ? extension.labelEn : extension.labelFr}}</a></li> -->
+					<li class="" ng-repeat="(tabIndex, tab) in extension.tabs"
+						ng-if="userHasAccess(tab)"
+						ng-class="activeIfPage(tab.page)">
+						<a ng-if="settings.access[userAccess]" ng-click="open({page:tab.page})">
+							<i class="glyphicon" ng-class="tab.icon"></i>&nbsp;
+							{{lang === 'en' ? tab.en : tab.fr}}</a>
+					</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>

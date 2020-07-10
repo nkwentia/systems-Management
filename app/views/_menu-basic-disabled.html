@@ -1,0 +1,64 @@
+<div ng-controller="ClassmenuCtrl">
+
+  <!-- Form Dropdown -->
+  <div class="btn-group">
+    <button class="btn btn-md btn-light dropdown-toggle disabled" data-toggle="dropdown">
+      {{lang === 'en' ? form.nameEn : form.nameFr}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li ng-repeat="(formIndex, form) in forms">
+        <a ng-href="" ng-click="open({formIndex:formIndex})">{{lang === 'en' ? form.nameEn : form.nameFr}}</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Department Dropdown -->
+  <div class="btn-group">
+    <button class="btn btn-md btn-light dropdown-toggle disabled" data-toggle="dropdown">
+      {{department.name || dict.select_department}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li ng-repeat="(deptId, dept) in departments">
+        <a ng-href="" ng-click="open({deptId:deptId})">{{departments[deptId].name}}</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Group Dropdown -->
+  <div class="btn-group">
+    <button class="btn btn-md btn-light dropdown-toggle disabled" data-toggle="dropdown">
+      {{group ? group.name : dict.select_group}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li ng-repeat="(groupId, group) in groups">
+        <a ng-click="open({groupId:groupId})">{{group.name}}</a>
+      </li>
+    </ul>
+  </div>
+
+   <!-- Subject Dropdown -->
+  <div  ng-if="['mastersheet', 'students', 'registration'].indexOf(page) === -1"
+        class="btn-group">
+    <button class="btn btn-md btn-light dropdown-toggle disabled" data-toggle="dropdown">
+      {{subject.en}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li ng-repeat="(subjectId, subject) in subjects">
+        <a ng-click="open({subjectId:subjectId})">{{subject.en}}</a>
+      </li>
+    </ul>
+  </div><!-- /btn-group -->
+
+  <!-- Term Dropdown -->
+  <div  ng-if="page === 'mastersheet'"
+        class="btn-group">
+    <button class="btn btn-md btn-light dropdown-toggle" data-toggle="dropdown">
+      {{term.name}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li ng-repeat="(termIndex, term) in terms">
+        <a ng-click="open({termIndex:termIndex})">{{term.name}}</a>
+      </li>
+    </ul>
+  </div>
+</div>

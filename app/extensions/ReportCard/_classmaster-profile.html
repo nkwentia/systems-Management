@@ -1,0 +1,142 @@
+<div class="marksheet" ng-controller="ClassmasterProfileCtrl">
+	<td class="col-md-5">
+		<form class="form-horizontal" role="form">
+			<h5 style="text-decoration:underline;"><strong>{{dict.disciplinary_record}}</strong></h5>
+      <div class="form-group">
+        <label for="absence" class="col-sm-7 control-label">
+          {{dict.hours_of_absence}}
+        </label>
+        <i class="printonly">{{data.dcard['absence']}}</i>
+        <div class="col-sm-5 noprint">
+          <input id="absence"
+                 type="number"
+                 class="form-control"  
+                 ng-model="data.dcard['absence']"
+                 ng-change="save(data.dcard)"
+                 ng-readonly="accessCode === 'admin'">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="council" class="col-sm-7 control-label">
+          {{dict.attended_disciplinary_council}}
+        </label>
+        <i class="printonly">{{data.dcard['council']}}</i>
+        <div class="col-sm-5 noprint">
+          <input id="council"
+                 type="number"
+                 class="form-control"  
+                 ng-model="data.dcard['council']"
+                 ng-change="save(data.dcard)"
+                 ng-readonly="accessCode === 'admin'">
+        </div>
+      </div>
+			<div class="form-group">
+        <label for="warned" class="col-sm-7 control-label">
+          {{dict.warned}}
+        </label>
+        <i class="printonly">{{data.dcard['warned']}}</i>
+        <div class="col-sm-5 noprint">
+          <input id="warned"
+                 type="number"
+                 class="form-control"  
+                 ng-model="data.dcard['warned']"
+                 ng-change="save(data.dcard)"
+                 ng-readonly="accessCode === 'admin'">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="suspended" class="col-sm-7 control-label">
+          {{dict.suspended}}
+        </label>
+        <i class="printonly">{{data.dcard['suspended']}}</i>
+        <div class="col-sm-5 noprint">
+          <input id="suspended"
+                 type="number"
+                 class="form-control"  
+                 ng-model="data.dcard['suspended']"
+                 ng-change="save(data.dcard)"
+                 ng-readonly="accessCode === 'admin'">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="expelled" class="col-sm-7 control-label">
+          {{dict.promotion_status}}
+        </label>
+        <div class="col-sm-5">
+          <div  class="btn-group">
+            <!-- If status is set to automatic -->
+            <button ng-if="data.student.status['2014'] === 0 && data.student.passing"
+                    class="btn btn-sm btn-success dropdown-toggle" 
+                    data-toggle="dropdown">
+              <i class="glyphicon" 
+                 ng-class="PROMOTE_OPTIONS[0].icon"></i>
+              &nbsp;{{PROMOTE_OPTIONS[1].name}}
+            </button>
+            
+            <button ng-if="data.student.status['2014'] === 0 && !data.student.passing"
+                  class="btn btn-sm btn-warning dropdown-toggle" 
+                  data-toggle="dropdown">
+                <i class="glyphicon" 
+                 ng-class="PROMOTE_OPTIONS[0].icon"></i>
+              &nbsp;{{PROMOTE_OPTIONS[2].name}}
+            </button>
+              
+            <!-- Otherwise show whatever it's manually set to -->
+              <button ng-if="data.student.status['2014'] > 0"
+                      class="btn btn-sm dropdown-toggle" 
+                      ng-class="'btn-'+PROMOTE_OPTIONS[data.student.status['2014']].style"
+                      data-toggle="dropdown">
+                  <i ng-class="PROMOTE_OPTIONS[data.student.status['2014']].icon"></i>
+                &nbsp;{{PROMOTE_OPTIONS[data.student.status['2014']].name}}
+              </button>
+            
+            <ul class="dropdown-menu">
+              <li>
+                <a ng-click="data.student.setStatus('2014', 0)">
+                  <i ng-class="PROMOTE_OPTIONS[0].icon"></i>
+                  {{PROMOTE_OPTIONS[0].name}}
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li ng-repeat="(optionIndex, option) in PROMOTE_OPTIONS.slice(1)">
+                <a ng-click="data.student.setStatus('2014', optionIndex + 1)">
+                  <i ng-class="PROMOTE_OPTIONS[optionIndex + 1].icon"></i>
+                  {{PROMOTE_OPTIONS[optionIndex + 1].name}}
+                </a>
+              </li>
+            </ul>
+          </div><!-- /btn-group -->
+        </div>
+      </div>
+      <h5 style="text-decoration:underline;">
+        <strong>{{dict.comments}}</strong>
+      </h5>
+      <div ng-if="accessCode === 'classmaster'"
+             style="margin-bottom:55px;">
+      <textarea class="form-control noprint" 
+                style="margin-bottom:10px;" 
+                rows="3"
+                ng-model="newComment.text"></textarea>
+      <button class="btn btn-default pull-right noprint"
+              ng-class="!newComment.isValid() ? 'disabled' : 'tests'"
+              ng-click="addComment()">{{dict.add_comment}}</button>
+      </div>
+      <table class="table table-striped" style="margin-top:55px;">
+        <tr ng-repeat="(commentIndex, comment) in data.comments">
+          <td>
+            <span style="color:green;">{{Users.get(comment.userId).fullname}}</span> - 
+            <span style="color:#666">{{comment._id | date:'medium'}}</span>
+            <br>
+            <strong>{{comment.text}}</strong>
+          </td>
+          <td ng-if="accessCode === 'classmaster'">
+            <a ng-click="removeComment(commentIndex)" ng-if="comment.userId === username">
+              <i class="glyphicon glyphicon-remove"></i>
+            </a>
+          </td>
+        </tr>
+      </table>
+		</form>
+	</td>
+</div>	
+

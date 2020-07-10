@@ -1,0 +1,24 @@
+<div class="row" ng-controller="NavtabsCtrl">
+
+	<!-- Tab Navigation -->
+	<div class="col-md-12">
+		<div  class="btn-group pull-right" style="margin-right:0;">
+		  <button class="btn btn-lg btn-light btn-on-dark dropdown-toggle" data-toggle="dropdown">
+		    {{teacher.fullname}} <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li>
+		      <a ng-click="logout()">Logout</a>
+		    </li>
+		  </ul>
+		</div>
+		<ul class="nav nav-tabs">
+	  	<li ng-repeat="(accessKey, accessBool) in teacher.access" 
+	  	    ng-if="accessBool === 1"
+	  	    ng-class="accessKey === userAccess ? 'active' : ''">
+		  	<a ng-click="login(accessKey)">{{lang === 'en' ? User.roles[accessKey].nameEn : User.roles[accessKey].nameEn}}</a>	
+	  	</li>
+	  </ul>
+	</div>
+
+</div>

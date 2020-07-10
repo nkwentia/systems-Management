@@ -1,0 +1,879 @@
+@font-face {
+  font-family: 'Bad Script';
+  font-style: cursive;
+  font-weight: 400;
+  src: local('Bad Script Regular'), local('BadScript-Regular'), url(../styles/Bad_Script/BadScript-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family:'Satisfy';
+  src: local('Satisfy'), url(../styles/Satisfy.woff) format('woff');
+}
+@font-face {
+  font-family: 'Over the Rainbow';
+  font-style: cursive;
+  font-weight: 300;
+  src: local('Over the Rainbow'), local('Over-the-Rainbow'), url(../styles/Over_the_Rainbow/OvertheRainbow.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Cedarville Cursive';
+  font-style: cursive;
+  font-weight: 400;
+  src: local('Cedarville Cursive'), local('Cedarville-Cursive'), url(../styles/Cedarville_Cursive/Cedarville-Cursive.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Permanent Marker';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Permanent Marker'), local('Permanent-Marker'), url(../fonts/Permanent_Marker/PermanentMarker.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Schoolbell';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Schoolbell'), local('Schoolbell'), url(../fonts/Schoolbell/Schoolbell.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Walter Turncoat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Walter Turncoat'), local('Walter-Turncoat'), url(../fonts/Walter_Turncoat/WalterTurncoat.ttf) format('truetype');
+}
+
+dt,dd{
+  margin-top: 5px;
+}
+
+.invalid-input{
+  border-color: #FA787E;
+}
+
+.myclasses thead tr th{
+text-align: left;
+  }
+
+.myclasses tbody tr td{
+  padding-top:20px;
+  padding-bottom:20px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.myclasses tbody tr td.remove{
+  text-align: right;
+}
+
+.remove i{
+  font-size: 1.5em;
+  color:#999;
+  }
+
+.remove i:hover{
+  /*font-size: 1.4em;*/
+  color:red;
+  }
+
+.myclasses tbody tr td .btn{
+  text-shadow: #36ADD1 1px 1px, #36ADD1 1px 1px;
+}
+
+td.promotion .btn-group .btn{
+  padding:5px;
+}
+
+td.column{
+  padding: 0px !important;
+  /*width:100px;*/
+  border:solid 1px #FCCD99 !important;
+}
+td.column.readonly{
+  border: solid 1px #ddd !important;
+}
+
+td.column.readonly .cell{
+    font-weight: normal;
+}
+
+td.column-on-right{
+  border-right:solid 1px #FCCD99 !important;
+}
+
+tr.row-spacer th{
+  background-color: inherit !important;
+  border: none;
+  padding-top: 20px !important;
+}
+
+tr.row-spacer:nth-of-type(1) th{
+  border-top:0px; 
+}
+
+th.column-on-bottom{
+  border-bottom:solid 2px #FCCD99 !important;
+}
+
+input.ng-dirty.ng-invalid{
+  border:solid 1px red;
+}
+
+.no-border-bottom th{
+  border-bottom: 0px !important;
+}
+
+.cell{
+  border:none;
+  width:100%;
+  height: 20px;
+  font-family: 'serif';
+  font-size: 14px;
+  font-weight: bold;
+  padding:5px;
+  background-color: inherit;
+}
+
+.cell-transcript{
+  border:none;
+  width:100%;
+  height:22px;
+  font-family:'serif';
+  font-size:11px;
+  font-weight:bold;
+  padding:0px;
+  background-color: inherit;
+}
+
+.cell-md{
+  height: 51px;
+}
+
+.idcard{
+  height:14.75cm !important;
+  width:10.5cm !important;
+}
+
+
+.cell-normal{
+  font-weight: normal; 
+}
+
+
+.cell-mono{
+  font-family: monospace;
+  font-weight: normal; 
+}
+
+.cell-container{
+  width:100px;
+}
+
+.item-id{
+  width:50px;
+}
+
+.btn-group{
+  margin-right: 10px;
+}
+
+.btn-group .btn-group{
+  margin-right: 0px;
+}
+
+.list-button{
+  background-image: url(/images/list-icon.svg);
+}
+
+.list-button:hover{
+  background-image: url(/images/list-icon-blue.svg);
+}
+
+.number-invalid{
+  background-color: #FFACAC;
+}
+
+.input.input-error{
+  border-color:red;
+}
+
+.text-error{
+  color:red;
+}
+
+.signature{
+  font-family: 'Serif', cursive;
+  /*font-size: 1.3em;*/
+  font-weight: bold;
+  color: #444 important;
+}
+
+::-webkit-input-placeholder {
+  font-weight: normal;
+}
+
+#teacher-name{
+    /*border:solid 1px #ddd;*/
+    /*border-bottom:none; */
+    border:none;
+    padding: 0px 10px 0px 10px;
+    margin-bottom:0px;
+    font-size: 26px;
+    /*background-color: #eee;*/
+    background-color: transparent;
+    border-radius: 0;
+    height: 46px;
+    width:350px;
+    line-height: 1.5em;
+}
+
+.username{
+  font-size: 20px;
+  padding-top: 15px;
+}
+
+
+.mastersheet {
+    background-color:white;
+    padding:10px;
+    border:solid 1px #ddd;
+    border-top:none;
+}
+
+th.small-column-header{
+  text-shadow: #f8f8f8 1px 1px, #f8f8f8 1px 1px;
+}
+
+.small-column-header{
+  width:55px; 
+  font-family:mono;
+  font-size:.8em;
+  text-align: center;
+}
+
+.symbol-column-header{
+  width:55px; 
+  font-family:mono;
+  text-align: center;
+}
+
+
+html{
+  overflow: auto;
+}
+
+body{
+  overflow: visible;
+  padding-top: 50px;
+}
+
+.navbar{
+  min-height: 0px;
+  margin-bottom: 10px;
+}
+
+.navbar-fixed-top{
+  border-bottom: solid 1px #e3e3e3;
+}
+
+.navbar-nav.navbar-sm > li > a{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.nav-stacked li{
+  /*border-top:solid 1px #e8e8e8;*/
+}
+
+input[type=radio] {
+  display:none; 
+  margin:10px;
+}
+
+
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+
+@media (min-width: 768px) {
+  .sidebar-container{
+    padding-right: 10px;
+  }
+
+  .sidebar-squeeze{
+    padding-right: 1px;
+  }
+
+  .sidebar {
+    /*padding: 0 15px 0 15px;*/
+    background-color: #fff;
+    /*min-height: 300px;*/
+  }
+}
+
+/* Sidebar navigation */
+
+.nav-sidebar > li > a {
+  padding-right: 10px;
+  padding-left: 10px;
+  border-left: solid 5px #fff;
+  
+}
+.nav-sidebar > .active > a {
+  background-color: #f7f7f7;
+  border-left: solid 5px #428bca;
+}
+
+.nav-sidebar > li > a:hover {
+  background-color: #fcfcfc;
+  border-left: solid 5px #ddd;
+}
+
+.nav-sidebar > .active > a:hover {
+  border-left: solid 5px #428bca;
+  background-color: #f7f7f7;
+  color:#428bca;
+}
+.nav-heading {
+  background-color:#428bca;
+  color:#f7f7f7;
+  font-size: 18px;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+.push-right{
+  padding-right: 0px;
+}
+
+
+tr.toolbar{
+  margin-bottom: 10px;
+}
+
+tr.toolbar th{
+  background-color: #f8f8f8 !important;
+  border:none !important;
+  padding: 3px !important;
+}
+
+th{
+  font-weight: bold;
+}
+
+
+.btn-light{
+background-color:#f8f8f8;
+}
+
+.btn-on-dark{
+  border-color: #e8e8e8;
+}
+
+.btn-role:hover{
+  background-color: #fff;
+}
+
+
+.dash-line{
+    border-bottom: dotted 2px #000;
+}
+
+.english{
+    color:#AC130D;
+}
+
+.french{
+	font-style:italic;
+}
+
+.remark-poor,
+.remark-verypoor{
+	color: red;
+}
+
+.login-box{
+  width: 338px;
+  padding: 19px 29px 29px;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.login-box input{
+  border:solid 1px #e8e8e8;
+}
+
+.form-signin-heading{
+  font-weight: bold;
+}
+
+.btn.disabled{
+  background-color: #E9E9E9;
+  color: #000;
+  border-color: #bbb;
+}
+
+.btn-lg{
+  margin-top: 0px;
+}
+
+
+/*Animations*/
+
+.animate-hide {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+  line-height:20px;
+  opacity:1;
+  padding:10px;
+  border:1px solid black;
+  background:white;
+}
+ 
+.animate-hide.ng-hide-add,
+.animate-hide.ng-hide-remove {
+  display:block!important;
+}
+ 
+.animate-hide.ng-hide {
+  line-height:0;
+  opacity:0;
+  padding:0 10px;
+}
+ 
+.check-element {
+  padding:10px;
+  border:1px solid black;
+  background:white;
+}
+
+.letterhead{
+  text-shadow: #e8e8e8 1px 1px, #e8e8e8 1px 1px;
+    font-weight: 700;
+    border:solid 1px #eee;
+    background-color: #fcfcfc;
+    margin-bottom: 10px;
+}
+
+.transcript .letterhead h6{
+  font-size: 1em;
+}
+
+.transcript .letterhead h4{
+  font-size: 1.2em;
+}
+
+.transcript .letterhead h3{
+  font-size: 1.3em;
+}
+
+
+.schoolname{
+  font-size: 18px;
+}
+
+/*D3 Bar Chart*/
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.tip-subject{
+  color:#F7F2A0;
+}
+
+.tip-average{
+  color:#C6C8F6;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.student-info-section{
+  padding-left:15px
+}
+.student-info-section-small{
+  padding-left:15px
+}
+
+.section-header{
+  margin-top:0;
+  text-decoration:underline;
+}
+
+.section-label-vertical{
+  transform:rotate(-90deg);
+  -webkit-transform:rotate(-90deg);
+  text-align: right;
+  background-color: #eee; 
+}
+
+.table-compact{
+  font-size: 12px;
+}
+
+.table-compact thead tr th,
+.table-compact tbody tr td{
+  padding: 5px;
+}
+
+
+.table-finance thead tr th{
+  width:20%;
+}
+
+.table-finance thead tr .title{
+  font-size: 1.4em;
+}
+
+.finance-summary td{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.finance-detail{
+  color:#555;
+}
+
+.term-summary{
+  border-left :solid 1px #ddd;
+  border-right:solid 1px #ddd;
+  width:20%;
+  padding-left:30px !important;
+  border-top:none !important;
+}
+
+td.profile-photo{
+  border-top:0px !important;
+  width:190px;
+}
+
+.profile-photo div img{
+  height:140px;
+}
+
+.printonly{
+  display:none;
+}
+
+.printonly-asrow{
+  display:none;
+}
+
+.signature-padding{
+  height:37px;
+}
+
+.table-transcript2 thead tr th{
+  font-size: 12px;
+}
+
+.table-transcript2 tbody tr td{
+  font-size: 11px;
+}
+
+
+
+/* Print CSS */
+@media print {
+
+    body{
+      padding-top:0px;
+    }
+    .print-show{
+      display: initial !important;
+    }
+    .side-nav{
+      display: none;
+    }
+
+    .remark-poor,
+    .remark-verypoor{
+      color: red !important;
+    }
+
+    .container {
+        width:100%;
+    }
+
+    .pagebreak{
+      page-break-after: always;
+    }
+    .fitpage{
+      max-height: 10.5in;
+      overflow: hidden;
+      padding-left: 15px;
+    }
+    .shrinktofit{
+      max-height: 50px;
+      overflow: hidden;
+    }
+
+    .printonly{
+      display:inline;
+    }
+
+    .printonly-asrow{
+      display:table-row;
+    }
+
+    .noprint {
+      display:none;
+    }
+
+    .marksheet{
+      padding:0px;
+      border:none;
+    }
+    .idcard{
+      height:14.85cm !important;
+      width:10.5cm !important;
+    }
+
+    .navtabs-container{
+      display: none;
+    }
+
+    .table-signature tr{
+      height:28px;
+    }
+
+    .table.letterhead{
+      padding: 0px;
+    };
+
+    .table.letterhead tr td{
+      border: 0px !important;
+      padding: 0px;
+
+    }
+
+    .letterhead tr td,
+    .summary tr td{
+      border-top:none;
+      padding: 0px !important;
+    }
+
+    .title-flank{
+      width:30%;
+    }
+
+    .title-flank h6{
+      font-size: 8px;
+    }
+
+    .title-main h4{
+      font-size: 12px;
+    }
+
+    .headline{
+      position: absolute;
+      left:0;
+      font-size: 15px;
+      width:100%;
+      text-align: center;
+      margin-top: -30px;
+    }
+
+    .well.student-info{
+      padding:0px;
+      border:none;
+      margin-bottom: 0px;
+      background-color: #ddd !important;
+      border:solid #ddd !important;
+      border-width:1px 0px 1px 0 !important;
+    }
+
+    .well.student-info .row .col-md-12 .table{
+      padding:0px;
+      padding-top: 0px;
+      border-top:solid 1px #ddd !important;
+    }
+
+    .student-info-section{
+      padding-left:0px; 
+    }
+
+    .student-info-section h4{
+      font-size: 11px;
+    }
+
+    .student-info-section h5{
+      font-size: 10px;
+      
+    }
+    .student-info-section-small{
+      padding-left:0px; 
+    }
+
+    .student-info-section-small h4{
+      font-size: 7px;
+    }
+
+    .student-info-section-small h5{
+      font-size: 8px;
+    }
+
+    .term-summary{
+      padding-left: 0px;
+      border:none;
+
+    }
+
+    td.profile-photo{
+      width:140px !important;
+    }
+
+    .profile-photo div img{
+      height:100px;
+    }
+
+    .table-transcript thead tr th{
+      font-size: 11px;
+    }
+
+    .table-transcript tbody tr td{
+      font-size: 10px;
+      padding:5px;
+    }
+
+    /*.reportcard-small thead tr th{
+      font-size: 10px !important;
+      padding: 5px;
+    }
+    .reportcard-small h4{
+      font-size: 11px !important;
+    }
+
+    .reportcard-small tbody tr td{
+      font-size: 10px !important;
+      padding:0px;
+      padding-left: 5px;
+    }*/
+    .table-transcript2 thead tr th{
+      font-size: 11px;
+    }
+    .reportcard-small thead tr th{
+      font-size: 10px !important;
+    }
+    .reportcard-small h4{
+      font-size: 11px !important;
+    }
+
+    .reportcard-small tbody tr td{
+      font-size: 10px !important;
+      padding:0px;
+      padding-left: 5px;
+    }
+
+    .table-transcript2 tbody tr td{
+      font-size: 7px;
+    }
+    .cell-transcript{
+      border:none;
+      width:100%;
+      height:14px;
+      font-size:7px;
+      font-weight:bold;
+      padding:0px;
+      background-color: inherit;
+    }
+
+    .transcript-summary {
+      width:33%;
+      float:left;
+    }
+
+    /*.signature{
+      width:60%;
+      float:right;
+    }*/
+
+    .signature-padding{
+      height:25px;
+    }
+
+    hr{
+      margin:10px 0;
+    }
+
+    .student-details{
+      margin-bottom:10px;
+    }
+
+    .student-details,
+    .student-details h5,
+    .student-details h4 {
+      font-size: 80%;
+    }
+
+    .letterhead{
+      border:none;
+      background-color: #eee !important;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .footer{
+      display: none;
+    }
+
+    
+
+    
+    
+  }

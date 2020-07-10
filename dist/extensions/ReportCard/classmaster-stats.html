@@ -1,0 +1,141 @@
+<div class="row">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+	<div class="col-md-10 marksheet" ng-controller="StatsCtrl">
+    <div class="printonly" ng-controller="ClassmenuCtrl">
+      <center><h4>{{lang === 'en' ? data.schoolInfo.nameEn : data.schoolInfo.nameFr}}</h4>
+      <h4>{{dict.school_statistics}}</h4>
+      <h5>{{(lang === 'en' ? route.forms[queryParams.formIndex].nameEn : route.forms[queryParams.formIndex].nameFr) || dict.all_forms}} {{route.departments[queryParams.deptId].name || dict.all_departments}}, {{route.terms[termIndex].name || dict.all_terms}}</h5></center>
+    </div>
+		<div class="" style="padding-bottom:10px;">
+		  <div ng-controller="ClassmenuCtrl">
+        <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>   
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:5px;padding-right:5px;">
+              <form class="navbar-form navbar-left" role="search" style="padding-left:0px;width:100%;padding-right:0px;">
+                <div class="form-group">
+                  <!-- Graph Menu -->
+                  <div class="btn-group">
+                    <!-- Form Dropdown -->
+                    <div class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{(lang === 'en' ? route.forms[queryParams.formIndex].nameEn : route.forms[queryParams.formIndex].nameFr) || dict.all_forms}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a ng-click="setQuery({formIndex:'all'})">{{dict.all_forms}}</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li ng-repeat="(formIndex, form) in route.forms">
+                          <a ng-click="setQuery({formIndex:formIndex})">
+                            {{lang === 'en' ? route.forms[formIndex].nameEn : route.forms[formIndex].nameFr}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Department Dropdown -->
+                    <div  class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{route.departments[queryParams.deptId].name || dict.all_departments}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a ng-click="setQuery({deptId:'all'})">{{dict.all_departments}}</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li ng-repeat="(deptId, dept) in route.departments">
+                          <a ng-click="setQuery({deptId:deptId})">
+                            {{route.departments[deptId].name}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Term Dropdown -->
+                    <div  class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                         {{route.terms[termIndex].name || dict.all_terms}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- <li>
+                          <a ng-click="search.group = ''">All Groups</a>
+                        </li>
+                        <li class="divider"></li> -->
+                        <li>
+                          <a ng-click="data.stats = getClassmasterStats(queryParams, 3)">{{dict.all_terms}}
+                          </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li ng-repeat="(termInd, term) in [1, 2, 3]">
+                          <a ng-click="data.stats = getClassmasterStats(queryParams, termInd)">
+                            {{dict.term}} {{term}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </form>
+          </div>
+        </nav>
+      </div>  
+		</div>
+    
+		<table ng-if="data.view === 'mastersheet'" class="table table-striped table-bordered table-compact">
+			<thead>
+				<tr>
+					<th></th>
+          <th style="text-align:center" colspan="3">{{dict.number_enrolled}}</th>
+          <th style="text-align:center" colspan="3">{{dict.number_present}}</th>
+          <th style="text-align:center" colspan="3">{{dict.percent_passing}}</th>
+          <th style="text-align:center" colspan="3">{{dict.percent_failing}}</th>
+				</tr>
+        <tr>
+          <th>{{dict.subject}}</th>
+          <th>{{dict.male}}</th>
+          <th>{{dict.female}}</th>
+          <th>{{dict.total}}</th>
+          <th>{{dict.male}}</th>
+          <th>{{dict.female}}</th>
+          <th>{{dict.total}}</th>
+          <th>{{dict.male}}</th>
+          <th>{{dict.female}}</th>
+          <th>{{dict.total}}</th>
+          <th>{{dict.male}}</th>
+          <th>{{dict.female}}</th>
+          <th>{{dict.total}}</th>
+        </tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(subjectCode, subject) in data.stats | orderBy:'nameEn'">
+          <td>{{subject.nameEn}}</td>
+          <td>{{subject.maleEnrolled}}</td>
+          <td>{{subject.femaleEnrolled}}</td>
+          <td>{{subject.maleEnrolled + subject.femaleEnrolled}}</td>
+          <td>{{subject.maleSat}}</td>
+          <td>{{subject.femaleSat}}</td>
+          <td>{{subject.maleSat + subject.femaleSat}}</td>
+          <td>{{subject.malePassing / subject.maleSat * 100 | number:0}} %</td>
+          <td>{{subject.femalePassing / subject.femaleSat * 100 | number:0}} %</td>
+          <td>{{(subject.malePassing + subject.femalePassing) / (subject.maleSat + subject.femaleSat) * 100 | number: 0}} % </td>
+          <td>{{(1 - subject.malePassing / subject.maleSat) * 100 | number:0}} %</td>
+          <td>{{(1 - subject.femalePassing / subject.femaleSat) * 100 | number:0}} %</td>
+          <td>{{(1 - (subject.malePassing + subject.femalePassing) / (subject.maleSat + subject.femaleSat)) * 100 | number: 0}} % </td>
+
+				</tr>
+			</tbody>
+		</table>
+		<!-- <div title="barchart"
+				ng-show="data.view === 'barchart'"
+				ng-hide="data.view !== 'barchart'"
+				class="ng-hide table-bordered">
+				<div class="d3-barchart"></div>
+		</div> -->
+	</div>
+</div>

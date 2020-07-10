@@ -1,0 +1,19 @@
+<div class="btn-toolbar">
+	<div ng-include="'views/_menu-basic.html'"></div>
+	<div class="btn-group" style="margin-left:10px;">
+    <button class="btn btn-md btn-success"
+    				ng-class="!data.assignedTeacher && allSelected ? '' : 'disabled'" 
+        	  data-toggle="dropdown"
+        	  ng-click="addBookmark({teacherId:username,courseId:courseId})">{{dict.add_class}}
+    </button>
+   </div><!-- /btn-group -->
+   <div class="btn-group pull-right" style="margin-left:10px;margin-right:0px;">
+   	<div class="alert alert-sm alert-warning" style="height:45px;padding-top:10px;"  ng-if="data.assignedTeacher">
+   		<i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;
+   		<strong>{{data.assignedTeacher.fullname}}</strong> {{dict.scheduled_to_teach}}
+   		<strong ng-controller="ClassmenuCtrl">
+   			<em>{{lang === 'en' ? form.nameEn : form.nameFr}}, {{department.code}}, {{group.name}}, {{lang === 'en' ? subject.en : subject.fr}}</em>
+   		</strong>
+   	</div>
+   </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="row">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+	<div class="col-md-10 marksheet" ng-controller="UsersCtrl">
+		<div class="printonly"><h3>{{dict.users}}</h3></div>
+
+		<nav class="navbar navbar-default" role="navigation" style="margin-bottom:10px;">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		    </div>
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:0px;">
+		      <form class="navbar-form navbar-left" role="search" style="padding-left:0px;">
+		        <table><tr><td>
+		        	<table>
+		        		<tr>
+		        			<td style="padding-left:10px;padding-right:15px;">
+		        				<input style="width:380px;" type="text" class="form-control" placeholder="{{dict.full_name}}" ng-model="tempUser.fullname">
+		        			</td>
+		        		</tr>
+		        	</table>
+		        </td>
+		        <td>
+			        <button type="submit" 
+			                class="btn btn-default {{validate(tempUser) ? '' : 'disabled'}}" 
+			                ng-click="addUser()">
+			        	{{dict.add_user}}
+			        </button>
+			    </td>
+			    <td>
+			        <div class="alert alert-sm alert-warning noprint" style="height:25px;padding-top:0px;" ng-if="validationError">
+						<i class="glyphicon glyphicon-exclamation-sign"></i>
+						<strong>{{dict.user}} {{dict.not_added}}.</strong> {{dict.user_already_exists}}.
+			  		</div>
+			  	</td></tr></table>
+		      </form>
+		    </div>
+		  </div>
+		</nav>
+
+		<!-- Subject View -->
+	  	<div class="row" style="">
+			<div class="col-md-12">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th style="padding-left:10px;">
+							{{dict.name}}</th>
+							<th class="text-center" 
+							    style="width:105px;"
+							    ng-repeat="(roleKey, role) in User.roles">{{lang === 'en' ? role.nameEn : role.nameFr}}</th>
+							
+							<th class="noprint" style="width:80px">{{dict.remove}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(userId, user) in  data.users">
+							<td style="padding-left:10px;width:300px;">
+								<a ng-click="open({page:'user', subpage:user.username})">{{user.fullname}}</a>
+							</td>
+							<td class="text-center" ng-repeat="(accessKey, accessBool) in user.access">
+								
+								<button ng-if="user.username !== username && !(user.username === 'admin' && accessKey === 'admin')"
+										ng-click="user.toggleAccess(accessKey)"
+										class="btn btn-md btn-light" style="border:solid 1px #ddd;">
+									<i ng-if="!user.hasAccess(accessKey)" 
+									   class="glyphicon glyphicon-minus" 
+									   style="color:red;"></i>
+									 <i ng-if="user.hasAccess(accessKey)" 
+								   class="glyphicon glyphicon-ok" 
+								   style="color:green;"></i>
+								</button>
+
+								<button ng-if="user.username === username || (user.username === 'admin' && accessKey === 'admin')"
+										class="btn btn-md btn-light disabled" style="border:solid 1px #ddd;">
+									<i ng-if="!user.hasAccess(accessKey)" 
+									   class="glyphicon glyphicon-minus" 
+									   style="color:red;"></i>
+									 <i ng-if="user.hasAccess(accessKey)" 
+								   class="glyphicon glyphicon-ok" 
+								   style="color:#666;"></i>
+								</button>
+							</td>
+							<td class="remove text-center noprint" style="width:80px;">
+								<a ng-click="remove(user)" ng-if="user.username !== username && user.username != 'admin'">
+									<i class="glyphicon glyphicon-remove"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>	
+

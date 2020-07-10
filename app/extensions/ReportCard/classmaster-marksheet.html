@@ -1,0 +1,182 @@
+<div class="row ">
+  <div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+  <div class="col-md-10 marksheet" ng-controller="MarksheetCtrl">
+  <div class="printonly" ng-controller="ClassmenuCtrl">
+    <center><h4>{{lang === 'en' ? data.schoolInfo.nameEn : data.schoolInfo.nameFr}}</h4>
+    <h4>{{dict.marksheet}} {{data.schoolInfo.schoolyear}} {{dict.academic_year}}</h4>
+    <h5>{{lang === 'en' ? form.nameEn : form.nameFr}}{{group.name}} {{department.name}} {{subject.en}}, {{term.name}}</h5></center>
+  </div>
+  <table class="table table-bordered table-striped" style="border:0px;">
+
+    <thead>
+      <tr class="no-border-bottom">
+        <th colspan="3" style="border:0px;padding:0px;padding-bottom:10px;">
+          <!-- class indicator -->
+          <div ng-controller="ClassmenuCtrl">
+            <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:5px;">
+                  <form class="navbar-form navbar-left" role="search" style="padding-left:0px;">
+                    <div class="form-group">
+                      <div class="btn-group">
+                        <!-- Form Dropdown -->
+                        <div class="btn-group">
+                          <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{lang === 'en' ? route.form['nameEn'] : route.form['nameFr']}}  <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <!-- <li>
+                              <a ng-click="search.form = ''">All Forms</a>
+                            </li>
+                            <li class="divider"></li> -->
+                            <li ng-repeat="(formIndex, form) in route.forms">
+                              <a ng-click="open({formIndex:formIndex})">
+                                {{lang === 'en' ? route.forms[formIndex]['nameEn'] : route.forms[formIndex]['nameFr']}}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- Department Dropdown -->
+                        <div  class="btn-group">
+                          <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{route.department['code'] || dict.select_department}} <span class="caret"></span> 
+                          </button>
+                          <ul class="dropdown-menu">
+                            <!-- <li>
+                              <a ng-click="search.department = ''">All Departments</a>
+                            </li> -->
+                            <!-- <li class="divider"></li> -->
+                            <li ng-repeat="(deptId, dept) in route.departments">
+                              <a ng-click="open({deptId:deptId})">
+                                {{route.departments[deptId]['name']}}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- Group Dropdown -->
+                        <div  class="btn-group">
+                          <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{route.group['name'] || dict.select_group}} <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <!-- <li>
+                              <a ng-click="search.group = ''">All Groups</a>
+                            </li>
+                            <li class="divider"></li> -->
+                            <li ng-repeat="(groupId, group) in route.groups">
+                              <a ng-click="open({groupId:groupId})">
+                                {{route.groups[groupId].name}}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- Subject Dropdown -->
+                        <div  class="btn-group">
+                          <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{route.subject['code'] || dict.select_subject}} <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li ng-repeat="(subjectId, subject) in route.subjects">
+                              <a ng-click="open({subjectId:subjectId})">
+                                {{route.subjects[subjectId].en}}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">{{dict.coeff}}</span>
+                          <input style="width:60px;" 
+                           type="text" 
+                           class="form-control"
+                           readonly="" 
+                           placeholder="{{dict.coeff}}"
+                           ng-model="data.marksheet.coeff"
+                           >
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </th>
+        <th class="text-center"
+            style="vertical-align:middle;border:solid 3px #fff;background-color:#f8f8f8;"
+            colspan="2"> 
+            
+            {{dict.term}} 1
+        </th>
+        <th class="text-center"
+            style="vertical-align:middle;border:solid 3px #fff;background-color:#f8f8f8;"
+            colspan="2"> 
+            {{dict.term}} 2
+        </th>
+        <th class="text-center"
+            style="vertical-align:middle;border:solid 3px #fff;background-color:#f8f8f8;"
+            colspan="2"> 
+            {{dict.term}} 3
+        </th>
+      </tr>
+      <tr>
+        <th style="width:40px;">{{dict.no}}</th>
+        <th style="width:380px;">{{dict.name}}</th>
+        <th style="width:100px;text-align:right;">{{dict.rankings}}</th>
+        <th class="text-center" 
+            ng-repeat="sequence in [1,2,3,4,5,6]">
+          S{{sequence}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  ng-repeat="(studentIndex, student) in data.students | orderBy:'name'">
+        <td>{{studentIndex + 1}}</td>
+        <td>
+          <a ng-click="open({page:'profile', studentId:student._id})">
+            {{student.name}}
+          </a>
+        </td>
+        <td style=" font-family:monotype;font-size:.9em;">
+            <table>
+              <tr>
+                <td style="width:25px;text-align:right;">
+                  {{data.rankings[student._id][0]}}
+                </td>
+                <td style="width:25px;text-align:right;">
+                  {{data.rankings[student._id][1]}}
+                </td>
+                <td style="width:25px;text-align:right;">
+                  {{data.rankings[student._id][2]}}
+                </td>
+                <td style="width:25px;text-align:right;">
+                  <strong>{{data.rankings[student._id][3]}}</strong>
+                </td>
+              </tr>
+            </table>
+        </td>
+        <td class="column readonly" 
+            ng-repeat="(cellIndex, cell) in [0,1,2,3,4,5]">
+
+          <div class="cell text-center 
+                      {{classMaster.getRemark(data.marksheet['table'][student._id][cellIndex]).css}} 
+                         {{marksheets.validateCell(data.marksheet['table'][student._id][cellIndex])}}">
+          {{data.marksheet['table'][student._id][cellIndex]}}
+          </div>
+        </td>
+      </tr> 
+    </tbody>
+  </table>
+</div>
+</div>

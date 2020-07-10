@@ -1,0 +1,153 @@
+<div class="row">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+	<div class="col-md-10 marksheet" ng-controller="EnrollmentCtrl">
+    <div class="printonly">
+      <center><h4>{{data.schoolInfo.nameEn}}</h4>
+      <h4>{{dict.enrollment_statistics}}</h4>
+      <h5>{{(lang === 'en' ? data.forms[formIndex].nameEn : data.forms[formIndex].nameFr) || dict.all_forms}}</h5></center>
+    </div>
+    <div class="noprint" style="padding-bottom:10px;">
+      <div>
+        <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:5px;padding-right:5px;">
+              <form class="navbar-form navbar-left" role="search" style="padding-left:0px;width:100%;padding-right:0px;">
+                <div class="form-group">
+                  <div class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{(lang === 'en' ? data.forms[formIndex].nameEn : data.forms[formIndex].nameFr) || dict.all_forms}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a ng-click="allForms()">{{dict.all_forms}}</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li ng-repeat="(formInd, form) in data.forms">
+                          <a ng-click="open({formIndex:formInd})">
+                            {{lang === 'en' ? data.forms[formInd].nameEn : data.forms[formInd].nameFr}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </div>  
+    </div>
+    <table class="table table-striped table-bordered table-compact text-center">
+      <thead>
+        <tr style="text-align:center">
+          <th style="vertical-align:middle" rowspan="2">{{dict.Class}}</th>
+          <th style="text-align:center" colspan="3">{{dict.enrollment}} {{dict.beginning_of_year}}</th>
+          <th style="text-align:center" colspan="3">{{dict.enrollment}} {{dict.end_of_year}}</th>
+          <th style="text-align:center" colspan="3">{{dict.promote}}</th>
+          <th style="text-align:center" colspan="3">{{dict.repeat}}</th>
+          <th style="text-align:center" colspan="3">{{dict.withdrawn}}</th>
+          <th style="text-align:center" colspan="3">{{dict.dismissed}}</th>
+        </tr>
+        <tr style="text-align:center">
+          <th style="text-align:center">{{dict.male}}</th>
+          <th style="text-align:center">{{dict.female}}</th>
+          <th style="text-align:center">{{dict.total}}</th>
+          <th style="text-align:center">{{dict.male}}</th>
+          <th style="text-align:center">{{dict.female}}</th>
+          <th style="text-align:center">{{dict.total}}</th>
+          <th style="text-align:center">{{dict.male}}</th>
+          <th style="text-align:center">{{dict.female}}</th>
+          <th style="text-align:center">{{dict.total}}</th>
+          <th style="text-align:center">{{dict.male}}</th>
+          <th style="text-align:center">{{dict.female}}</th>
+          <th style="text-align:center">{{dict.total}}</th>
+          <th style="text-align:center">{{dict.male}}</th>
+          <th style="text-align:center">{{dict.female}}</th>
+          <th style="text-align:center">{{dict.total}}</th>
+          <th style="text-align:center">{{dict.male}}</th>
+          <th style="text-align:center">{{dict.female}}</th>
+          <th style="text-align:center">{{dict.total}}</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="(deptId, deptStats) in data.classStats">
+        <tr class="success">
+          <td style="text-align:left" colspan="19"><strong>{{data.depts[deptId].name}}</strong></td>
+        </tr>
+        <tr ng-repeat="(groupId, classStats) in deptStats">
+          <td ng-if="formIndex !== -1">{{data.groups[groupId].name}}</td>
+          <td ng-if="formIndex === -1">{{lang === 'en' ? data.forms[groupId].nameEn : data.forms[groupId].nameFr}}</td>
+          <td>{{classStats.boysOnRoll}}</td>
+          <td>{{classStats.girlsOnRoll}}</td>
+          <td>{{classStats.boysOnRoll + classStats.girlsOnRoll}}</td>
+          <td>{{classStats.boysEOY}}</td>
+          <td>{{classStats.girlsEOY}}</td>
+          <td>{{classStats.boysEOY + classStats.girlsEOY}}</td>
+          <td>{{classStats.boysPromote}}</td>
+          <td>{{classStats.girlsPromote}}</td>
+          <td>{{classStats.boysPromote + classStats.girlsPromote}}</td>
+          <td>{{classStats.boysRepeat}}</td>
+          <td>{{classStats.girlsRepeat}}</td>
+          <td>{{classStats.boysRepeating + classStats.girlsRepeat}}</td>
+          <td>{{classStats.boysWithdraw}}</td>
+          <td>{{classStats.girlsWithdraw}}</td>
+          <td>{{classStats.boysWithdraw + classStats.girlsWithdraw}}</td>
+          <td>{{classStats.boysDismiss}}</td>
+          <td>{{classStats.girlsDismiss}}</td>
+          <td>{{classStats.boysDismiss + classStats.girlsDismiss}}</td>
+          
+        </tr>
+        <tr class="success">
+          <td><strong>{{data.depts[deptId].name}} Totals</strong></td>
+          <td>{{data.deptStats[deptId].boysOnRoll}}</td>
+          <td>{{data.deptStats[deptId].girlsOnRoll}}</td>
+          <td>{{data.deptStats[deptId].boysOnRoll + data.deptStats[deptId].girlsOnRoll}}</td>
+          <td>{{data.deptStats[deptId].boysEOY}}</td>
+          <td>{{data.deptStats[deptId].girlsEOY}}</td>
+          <td>{{data.deptStats[deptId].boysEOY + data.deptStats[deptId].girlsEOY}}</td>
+          <td>{{data.deptStats[deptId].boysPromote}}</td>
+          <td>{{data.deptStats[deptId].girlsPromote}}</td>
+          <td>{{data.deptStats[deptId].boysPromote + data.deptStats[deptId].girlsPromote}}</td>
+          <td>{{data.deptStats[deptId].boysRepeat}}</td>
+          <td>{{data.deptStats[deptId].girlsRepeat}}</td>
+          <td>{{data.deptStats[deptId].boysRepeat + data.deptStats[deptId].girlsRepeat}}</td>
+          <td>{{data.deptStats[deptId].boysWithdraw}}</td>
+          <td>{{data.deptStats[deptId].girlsWithdraw}}</td>
+          <td>{{data.deptStats[deptId].boysWithdraw + data.deptStats[deptId].girlsWithdraw}}</td>
+          <td>{{data.deptStats[deptId].boysDismiss}}</td>
+          <td>{{data.deptStats[deptId].girlsDismiss}}</td>
+          <td>{{data.deptStats[deptId].boysDismiss + data.deptStats[deptId].girlsDismiss}}</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr class="danger">
+          <td><strong>Totals</strong></td>
+          <td>{{data.totalStats.boysOnRoll}}</td>
+          <td>{{data.totalStats.girlsOnRoll}}</td>
+          <td>{{data.totalStats.boysOnRoll + data.totalStats.girlsOnRoll}}</td>
+          <td>{{data.totalStats.boysEOY}}</td>
+          <td>{{data.totalStats.girlsEOY}}</td>
+          <td>{{data.totalStats.boysEOY + data.totalStats.girlsEOY}}</td>
+          <td>{{data.totalStats.boysPromote}}</td>
+          <td>{{data.totalStats.girlsPromote}}</td>
+          <td>{{data.totalStats.boysPromote + data.totalStats.girlsPromote}}</td>
+          <td>{{data.totalStats.boysRepeat}}</td>
+          <td>{{data.totalStats.girlsRepeat}}</td>
+          <td>{{data.totalStats.boysRepeat + data.totalStats.girlsRepeat}}</td>
+          <td>{{data.totalStats.boysWithdraw}}</td>
+          <td>{{data.totalStats.girlsWithdraw}}</td>
+          <td>{{data.totalStats.boysWithdraw + data.totalStats.girlsWithdraw}}</td>
+          <td>{{data.totalStats.boysDismiss}}</td>
+          <td>{{data.totalStats.girlsDismiss}}</td>
+          <td>{{data.totalStats.boysDismiss + data.totalStats.girlsDismiss}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

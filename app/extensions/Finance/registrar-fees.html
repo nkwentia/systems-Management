@@ -1,0 +1,105 @@
+<div class="row ">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+	<div class="col-md-10 marksheet" ng-controller="FeesCtrl">
+		<div class="printonly"><h3>{{dict.fees}}</h3></div>
+<nav class="navbar navbar-default" role="navigation" style="margin-bottom:10px;">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:0px;">
+			      <form name="feeForm" class="navbar-form navbar-left" style="padding-left:0px;">
+			        <div class="form-group">
+			        	<table>
+			        		<tr class="toolbar">
+										<th>
+					    				<input 	type="text" 
+					    								class="form-control" 
+					    								placeholder="{{dict.fee_name}}" 
+					    								ng-model="newFee.name"
+					    								style="width:395px;">
+					    			</th>
+					    			<th>
+					    				<div class="input-group">
+					    				  <span class="input-group-addon">{{dict.school_fee}}</span>
+					    					<input type="text"
+					    								 format="number"
+					    								 name="schoolAmount"
+					    								 ng-model="newFee.schoolAmount"
+					    								 required
+					    							   class="form-control" 
+					    							   placeholder="{{dict.school_fee}}"
+					    							   style="width:150px;">
+					    				</div>
+					    			</th>
+					    			<th>
+					    				<div class="input-group">
+					    				  <span class="input-group-addon">{{dict.pta_fee}}</span>
+					    					<input type="text"
+					    								 format="number"
+					    								 name="ptaAmount"
+					    								 ng-model="newFee.ptaAmount"
+					    								 required
+					    							   class="form-control" 
+					    							   placeholder="{{dict.pta_fee}}"
+					    							   style="width:150px;">
+					    				</div>
+					    			</th>
+									</tr>
+			        	</table>
+			        </div>
+			        <button type="submit" 
+		  								class="btn btn-default" 
+		  								ng-class="newFee.isValid() && newFee.name ? '' : 'disabled'" 
+		  								ng-click="add(newFee)">
+			        	{{dict.add}}
+			        </button>
+			        <div class="alert alert-sm alert-warning noprint" style="height:25px;padding-top:0px;" ng-if="validationError">
+   						<i class="glyphicon glyphicon-exclamation-sign"></i>
+   						<strong>{{dict.fee}} {{dict.not_added}}.</strong> {{dict.duplicate_names_are_not_allowed}}.
+   			  		</div>
+			      </form>
+			      
+			</div>
+		</div>
+	</nav>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th style="width:400px">{{dict.name}}</th>
+				<th>{{dict.school_fee}}</th>
+				<th>{{dict.pta_fee}}</th>
+				<th>{{dict.student}}s</th>
+				<th class="noprint" style="width:80px;">{{dict.remove}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(feeIndex, fee) in data.fees">
+				<td class="column readonly" style="width:400px;vertical-align:middle;">
+					<div class="cell">{{fee.name}}</div>
+				</td>
+				<td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{fee.schoolAmount | currency:""}}</div>
+				</td>
+				<td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{fee.ptaAmount | currency:""}}</div>
+				</td>
+				<td>
+					{{fee.students.length}}
+				</td>
+				<td class="remove text-center noprint" style="width:80px;">
+					<a ng-click="remove(fee)" ng-if="fee.students && fee.students.length === 0">
+						<i class="glyphicon glyphicon-remove"></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

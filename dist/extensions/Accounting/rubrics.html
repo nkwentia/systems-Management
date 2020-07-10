@@ -1,0 +1,135 @@
+<div class="row ">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+	<div class="col-md-10 marksheet" ng-controller="RubricCtrl">
+		<div style="margin-bottom:10px;">
+			<div class="printonly">
+		      <center><h4>{{lang === 'en' ? data.schoolInfo.nameEn : data.schoolInfo.nameFr}}</h4>
+		      <h4>{{dict.accounting_rubrics}} {{data.schoolInfo.schoolyear}} {{dict.academic_year}}</h4></center>
+		    </div>
+				<table class="table table-striped table-bordered">
+					<thead>
+						
+						<tr>
+							<th>{{dict.rubric_description}}</th>
+							<th>{{dict.num_students}}</th>
+							<th>{{dict.amount_per_student}}</th>
+							<th>{{dict.rubric_total}}</th>
+							<th>{{dict.school_amount}}</th>
+							<th>{{dict.divisional_del_amount}}</th>
+							<th>{{dict.regional_del_amount}}</th>
+							<th>{{dict.ministry_amount}}</th>
+							<th class="noprint">{{dict.remove}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="rubric in data.rubrics">
+							<td>
+							  {{rubric.description}}
+							</td>
+							<td>{{data.allStudents.length}}</td>
+							<td>{{rubric.amount | number:0}}</td>
+							<td>{{data.allStudents.length * rubric.amount | number:0}}</td>
+							<td>{{data.allStudents.length * rubric.amount * (100 - rubric.divPercent - rubric.regPercent - rubric.minPercent) / 100 | number:0}}</td>
+							<td>{{data.allStudents.length * rubric.amount * rubric.divPercent / 100 | number:0}}</td>
+							<td>{{data.allStudents.length * rubric.amount * rubric.regPercent / 100 | number:0}}</td>
+							<td>{{data.allStudents.length * rubric.amount * rubric.minPercent / 100 | number:0}}</td>
+							<td class="remove text-center noprint" style="width:80px;padding-top:15px;">
+								<a ng-click="remove(rubric)">
+									<i class="glyphicon glyphicon-remove"></i>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<th style="text-align:right">{{dict.total}}</th>
+							<th>{{data.allStudents.length}}</th>
+							<th>{{data.rubricTotal | number: 0}}</th>
+							<th>{{data.rubricTotal * data.allStudents.length | number: 0}}</th>
+							<th>{{data.schoolTotal * data.allStudents.length | number: 0}}</th>
+							<th>{{data.divTotal * data.allStudents.length | number: 0}}</th>
+							<th>{{data.regTotal * data.allStudents.length | number: 0}}</th>
+							<th>{{data.minTotal * data.allStudents.length | number: 0}}</th>
+							<th class="noprint"></th>
+						</tr>
+						
+					</tbody>
+				</table>
+
+				<form class="navbar-form navbar-left" role="search" style="padding-left:15px;">
+					<table class="table table-striped table-bordered noprint">
+						<tr>
+							<th colspan="2" style="text-align:center">{{dict.add_rubric}}</th>
+						</tr>
+						<tr>
+							<th width="100px">{{dict.description}}</th>
+							<th width="200px">
+				      			<input id="description" 
+						      		 class="form-control" 
+						      		 placeholder="{{dict.description}}" 
+						      		 ng-model="newRubric.description">
+						    </th>
+						</tr>
+						<tr>
+							<th>{{dict.amount_per_student}}</th>
+						    <th>
+						    	<input id="amount" 
+						    		type="text"
+						    		format="number"
+						      		 class="form-control" 
+						      		 placeholder="{{dict.amount_per_student}}" 
+						      		 ng-model="newRubric.amount">
+						    </th>
+						</tr>
+						<tr>
+							<th>{{dict.divisional_del_percentage}}</th>
+						    <th>
+						    	<input id="divPercent" 
+						    		type="number"
+						      		 class="form-control" 
+						      		 placeholder="{{dict.divisional_del_percentage}}" 
+						      		 ng-model="newRubric.divPercent">
+						    </th>
+						</tr>
+						<tr>
+							<th>{{dict.regional_del_percentage}}</th>
+						    <th>
+						    	<input id="regPercent"
+						    		type="number" 
+						      		 class="form-control" 
+						      		 placeholder="{{dict.regional_del_percentage}}" 
+						      		 ng-model="newRubric.regPercent">
+						    </th>
+						</tr>
+						<tr>
+							<th>{{dict.ministry_percentage}}</th>
+						    <th>
+						    	<input id="minPercent" 
+						    		type="number"
+						      		 class="form-control" 
+						      		 placeholder="{{dict.ministry_percentage}}" 
+						      		 ng-model="newRubric.minPercent">
+						    </th>
+						</tr>
+						<tr>
+							<th colspan="2">
+								<button type="submit"
+									class="btn btn-info" 
+									ng-class="newRubric.description && newRubric.amount ? '' : 'disabled'"
+									ng-click="add(newRubric)">
+										{{dict.add_rubric}}
+								</button>
+							</th>
+						</tr>
+						<tr ng-if="validationError">
+							<th colspan="2">
+				  				<div class="alert alert-sm alert-warning" style="height:32px;padding-top:0px;">
+			   						<i class="glyphicon glyphicon-exclamation-sign"></i>
+			   						<strong>{{dict.rubric}} {{dict.not_added}}.</strong><br> {{dict.duplicate_names_are_not_allowed}}.
+			   			  		</div>
+			   			  	</th>
+						</tr>
+					</table>
+				</form>
+		</div>
+	</div>
+</div>	
+

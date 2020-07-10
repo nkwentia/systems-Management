@@ -1,0 +1,164 @@
+<div class="row ">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+	<div class="col-md-10 marksheet" ng-controller="DivFeesCtrl">
+		<div class="printonly"><h3>Fee Rubric List</h3></div>
+			<nav class="navbar navbar-default" role="navigation">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		    </div>
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:5px;">
+		      
+		        <div class="form-group" style="width:130px;">
+		          <!-- Group Dropdown -->
+						  <div class="btn-group">
+						    <button class="btn btn-sm btn-default dropdown-toggle" 
+						    				data-toggle="dropdown">
+						      {{data.types[data.type].name}} 
+						      &nbsp;<span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu">
+						      <li ng-repeat="(typeIndex, type) in data.types">
+						        <a ng-click="update(typeIndex)">{{type.name}}</a>
+						      </li>
+						    </ul>
+						  </div>
+		        </div>
+		        
+		    </div>
+		  </div>
+		</nav>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Rubric Name</th>
+				<th>Amount Per Student</th>
+				<th style="width:100px;">Division Percent</th>
+				<th style="width:100px;">Region Percent</th>
+				<!-- <th style="width:100px;">Ministry Percent</th> -->
+				<th style="width:80px;">Remove</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(divfeeeIndex, divfee) in data.divfees">
+				<td class="column readonly" style="width:400px;vertical-align:middle;">
+					<div class="cell">{{divfee.name}}</div>
+				</td>
+				<td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{divfee.amount | number:0}}</div>
+				</td>
+				<td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{divfee.division | number:0}}</div>
+				</td>
+				<td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{divfee.region | number:0}}</div>
+				</td>
+				<!-- <td class="column readonly" style="vertical-align:middle;">
+					<div class="cell">{{divfee.ministry | number:0}}</div>
+				</td> -->
+				
+				<td class="remove text-center" style="width:80px;">
+					<a ng-click="remove(divfee)">
+						<i class="glyphicon glyphicon-remove"></i>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="finance-summary success"><strong>Total:</strong></td>
+				<td class="finance-summary success">{{data.studentFee | number:0}}</td>
+				
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<nav class="navbar navbar-default" role="navigation" style="margin-bottom:10px">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:10px;">
+			      <form name="feeForm" class="navbar-form navbar-left" style="padding-left:10px;">
+			        <div class="form-group">
+			        	<table>
+			        		<tr class="toolbar">
+									<th colspan="2">
+					    				<input 	type="text" 
+					    								class="form-control {{showValidation ? 'invalid-input' : ''}}" 
+					    								placeholder="Rubric Name" 
+					    								ng-model="newDivFee.name"
+					    								style="width:400px;">
+					    			</th>
+					    			<th>
+					    				<div class="input-group">
+					    				  
+					    					<input type="text" format="number"
+					    								 name="amount"
+					    								 ng-model="newDivFee.amount"
+					    								 required
+					    							   class="form-control" 
+					    							   placeholder="Rubric Amount"
+					    							   style="width:200px;">
+					    					<span class="input-group-addon">CFA Per Student</span>
+					    				</div>
+					    			</th>
+									</tr>
+									<tr><th>
+											<label for="division">Percentage to Division:</label></th>
+										<th>
+											<label for="region">Percentage to Region:</label></th>
+										<!-- <th>
+											<label for="ministry">Percentage to Ministry:</label></th> -->
+									</tr>
+									<tr><th>
+											<input type="number"
+															max="100"
+						    								 name="division"
+						    								 ng-model="newDivFee.division"
+						    								 required
+						    							   class="form-control" 
+						    							   placeholder="Percentage to Division"
+						    							   style="width:200px;"></th>
+						    			<th>
+						    				<input type="number"
+			    								 name="region"
+			    								 ng-model="newDivFee.region"
+			    								 required
+			    							   class="form-control" 
+			    							   placeholder="Percentage to Region"
+			    							   style="width:200px;"></th>
+						    			<th style="text-align:center;">
+					    					<div class="form-group" style="text-align:center;">
+			        							<button type="submit"
+					  								class="btn btn-info" 
+					  								ng-class="newDivFee.isValid() && newDivFee.name ? '' : 'enabled'" 
+					  								ng-click="add(newDivFee)">
+									        		Add Fee
+									        	</button>
+			        						</div>
+			        					</th>
+			        					<th ng-if="showValidation" class="alert alert-sm alert-warning" style="height:30px;padding-top:5px;position:absolute;">
+									        <i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;
+									        <strong>Error: </strong>Fee Name has to be different.
+									    </th>
+					    			</tr>
+			        	</table>
+			        </div>
+			        
+			      </form>
+			      
+			</div>
+		</div>
+	</nav>
+	</div>
+</div>

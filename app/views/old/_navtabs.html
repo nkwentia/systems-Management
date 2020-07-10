@@ -1,0 +1,28 @@
+<div class="row" ng-controller="NavtabsCtrl">
+
+	<!-- Tab Navigation -->
+	<div class="col-md-12 ">
+		<div  class="btn-group pull-right" style="margin-right:0;">
+		  <button class="btn btn-lg btn-light btn-on-dark dropdown-toggle" data-toggle="dropdown">
+		    {{userAccess[0].toUpperCase()}}: {{teacher.fullname}} <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu">
+		  	<li ng-repeat="(accessKey, accessBool) in teacher.access" ng-if="accessBool === 1">
+			  	<a ng-click="login(accessKey)">{{accessKey}}</a>	
+		  	</li>
+		  	<li class="divider"></li>
+		    <li>
+		      <a ng-click="logout()">{{dict.logout}}</a>
+		    </li>
+		  </ul>
+		</div>
+		<ul class="nav nav-tabs">
+			<li ng-repeat="(tabIndex, tab) in TABS"
+				ng-if="userHasAccess(tab)"
+				ng-class="activeIfPage(tab.page)">
+				<a ng-click="open({page:tab.page})"><i class="glyphicon" ng-class="tab.icon"></i> &nbsp;{{tab.label}}</a>
+			</li>
+		</ul>
+	</div>
+
+</div>

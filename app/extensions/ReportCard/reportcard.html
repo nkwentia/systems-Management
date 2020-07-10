@@ -1,0 +1,361 @@
+
+<div class="row">
+  <div class="col-md-2" ng-include="'views/_navstacked.html'">
+  </div>
+
+  <div class="col-md-10 marksheet" 
+       ng-controller="reportcardCtrl" 
+       ng-init="mastersheet = getMastersheet()"
+       >
+
+    <div class="noprint" style="padding-bottom:10px;">
+      <div ng-controller="ClassmenuCtrl">
+        <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:5px;padding-right:5px;">
+              <form class="navbar-form navbar-left" role="search" style="padding-left:0px;width:100%;padding-right:0px;">
+                <div class="form-group">
+                  <div class="btn-group">
+                    <!-- Form Dropdown -->
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{lang === 'en' ? route.form['nameEn'] : route.form['nameFr']}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- <li>
+                          <a ng-click="search.form = ''">All Forms</a>
+                        </li>
+                        <li class="divider"></li> -->
+                        <li ng-repeat="(formIndex, form) in route.forms">
+                          <a ng-click="open({formIndex:formIndex})">
+                            {{lang === 'en' ? route.forms[formIndex].nameEn : route.forms[formIndex].nameFr}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Department Dropdown -->
+                    <div  class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{route.department['name'] || dict.select_department}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- <li>
+                          <a ng-click="search.department = ''">All Departments</a>
+                        </li> -->
+                        <!-- <li class="divider"></li> -->
+                        <li ng-repeat="(deptId, dept) in route.departments">
+                          <a ng-click="open({deptId:deptId})">
+                            {{route.departments[deptId].name}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Group Dropdown -->
+                    <div  class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{route.group['name'] || dict.select_group}}
+                          <span class="caret"></span> 
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- <li>
+                          <a ng-click="search.group = ''">All Groups</a>
+                        </li>
+                        <li class="divider"></li> -->
+                        <li ng-repeat="(groupId, group) in route.groups">
+                          <a ng-click="open({groupId:groupId})">
+                            {{route.groups[groupId].name}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </div>  
+    </div>
+<div ng-repeat="(studentIndex, student) in data.students | orderBy:'name'" ng-show="student._id === data.student._id" ng-if="student._id === data.student._id || ClassMaster.printVariable === true || ClassMaster.printVariable === 'true'" class="print-show">
+  <div class="pagebreak" ng-if="studentIndex !== 0 && (ClassMaster.printVariable === true || ClassMaster.printVariable === 'true')"></div>
+
+    <!-- School Name Letterhead -->
+    <div class="" ng-include="'views/_letterhead.html'"></div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well student-info">
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table" style="width:100%;">
+                <tr>
+                  <td class="profile-photo">
+                    <div class="img-thumbnail" >
+                      <img src="images/user.svg">
+                    </div>
+                  </td>
+                  <td class="text-center" style="width:20%;border-top:0px;">
+                    <div class="text-left">
+                      <div class="btn-group noprint">
+                        <button class="btn btn-lg dropdown-toggle" 
+                            data-toggle="dropdown">{{student.name}}
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li ng-repeat="(studentIndex, student) in data.students | orderBy:'name'">
+                            <a ng-click="open({studentId:student._id})">{{student.name}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="student-info-section">
+                        <h4 class="section-header printonly">{{student.name}}</h4>
+                        <h5>{{dict.sex}}: <strong>{{dict[student.sex]}}</strong><br>
+                        {{dict.date_of_birth}}: <strong>{{student.birth | date:'MMM dd, yyyy'}}</strong><br>
+                        {{dict.student_id}}: <strong>{{student.id}}</strong><br>
+                        {{dict.Class}}: <strong>
+                          {{lang === 'en' ? data.forms[student.formIndex].nameEn : data.forms[student.formIndex].nameFr}}, 
+                          {{data.departments[student.deptId].code}}, {{data.groups[student.groupId].name}}</strong></h5>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center term-summary" style="width:35%;">
+                    <div class="text-left">
+                      <!-- <div class="btn-group" style="margin-bottom:10px;">
+                        <div class="btn-group noprint">
+                          <button class="btn btn-lg dropdown-toggle" 
+                                  data-toggle="dropdown">
+                              {{data.forms[student.formIndex].name}}
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li ng-repeat="(formIndex,form) in data.forms">
+                              <a  
+                                ng-click="open({formIndex:formIndex})">
+                                {{data.forms[formIndex].name}}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="btn-group noprint">
+                          <button class="btn btn-lg dropdown-toggle" 
+                              data-toggle="dropdown">{{data.term.name}}
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li ng-repeat="(termIndex,term) in data.terms">
+                              <a  
+                                ng-click="open({termIndex:termIndex})">{{data.terms[termIndex].name}}</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="btn-group noprint">
+                          <button class="btn btn-lg dropdown-toggle" 
+                              data-toggle="dropdown">{{data.term.name}}
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li ng-repeat="(termIndex,term) in data.terms">
+                              <a  
+                                ng-click="open({termIndex:termIndex})">{{data.terms[termIndex].name}}</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div> -->
+                      <h4 class="section-header noprint">{{data.schoolInfo.schoolyear}} {{dict.academic_year}}</h4>
+                      <div class="btn-group noprint">
+                        <button class="btn btn-lg dropdown-toggle" 
+                            data-toggle="dropdown">{{lang === 'en' ? data.term.nameEn : data.term.nameFr}}
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li ng-repeat="(termIndex,term) in data.terms">
+                            <a  
+                              ng-click="open({termIndex:termIndex})">{{lang === 'en' ? data.terms[termIndex].nameEn : data.terms[termIndex].nameFr}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="student-info-section">
+                        <h4 class="section-header printonly">{{data.schoolInfo.schoolyear}} {{dict.academic_year}} <br>{{data.term.name}}</h4>
+                        <h5 style="font-family:mono;" class="{{getRemark(data.msheet.table[student._id][0]).css}}">{{ data.msheet.table[student._id][0] >= 0 ? formatNumber(data.msheet.table[student._id][0]) : "0.0" }} / 20<br>
+                        {{dict[getRemark(data.msheet.table[student._id][0]).text] | uppercase}}</h5>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center" style="border-top:0px;">
+                    <div class="text-left student-info-section">
+                      <h4 class="section-header">{{dict.parent_contact}}</h4>
+                      <h5>{{student.parentName}}<br>
+                      {{student.parentPhone}}<br>
+                      {{student.parentEmail}}</h5>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>   
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 reportcard-small" id="marktable">
+        <div  ng-repeat="(setIndex, set) in data.sets">
+          <h4 ng-if="nsets > 1">{{data.subjectTypes[setIndex] | uppercase}}</h4>    
+          <table  class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>{{dict.subject_discipline}}</th>
+
+                <!--  <th></th> -->
+                <!-- <th class="text-center"
+                  style="vertical-align:middle;border:solid 3px #fff;background-color:#f8f8f8;"
+                  ng-repeat = "sequence in [1,2]"> 
+                  S{{sequence}}
+                </th> -->
+                <!-- <th>S2</th> -->
+                <th>S{{s[0]}}</th>
+                <th>S{{s[1]}}</th> 
+                <th>{{dict.average}}</th>
+                <th>{{dict.coeff}}</th>
+                <th>{{dict.AxC}}</th>
+                <th>{{dict.rank}}</th>
+                <th>{{dict.remark}}</th>
+                <th>{{dict.name_and_signature}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="(mId, marksheet) in set.marksheets">
+                <td>
+                  <a ng-click="open({page:'classmasterMarksheet', subjectId:marksheet.subjectId})">{{data.subjects[marksheet.subjectId].en}} / {{data.subjects[marksheet.subjectId].fr}}</a>
+                </td>
+
+                <td ng-repeat="sequence in [0,1]" class="{{getRemark(getMark({row:marksheet.table[student._id], t:termIndex, s:sequence})).css}}">{{getMark({row:marksheet.table[student._id], t:termIndex, s:sequence})}}
+                </td>
+
+                <td class="{{getRemark(set.summsheets[mId]['table'][student._id][0]).css}}">
+                  {{set.summsheets[mId]['table'][student._id][0] >= 0 ? formatNumber(set.summsheets[mId]['table'][student._id][0]) : ""}}
+                </td>
+
+                <td>
+                  {{set.summsheets[mId]['table'][student._id][0] >= 0 ? marksheet.coeff : ""}}
+                </td>
+                <td class="{{getRemark(set.summsheets[mId]['table'][student._id][0]).css}}">
+                  {{set.summsheets[mId]['table'][student._id][0] >= 0 ? formatNumber(set.summsheets[mId]['table'][student._id][0] * marksheet.coeff) : ""}}
+                </td>
+                <td>{{data.rankings[marksheet._id][student._id][termIndex]}}</td>
+                <td class="{{getRemark(set.summsheets[mId]['table'][student._id][0]).css}}">{{dict[getRemark(set.summsheets[mId]['table'][student._id][0]).text]}}</td>
+                <td>
+                  <div class="signature">
+                    {{set.summsheets[mId]['table'][student._id][0] >= 0 ? Users.get(marksheet.teacherId).fullname : ""}}
+                  </div>
+                </td>
+              </tr>
+              <tr class="danger">
+                <td colspan="4" class="text-right" style="padding:5px"><strong>Sub Total:</strong></td>
+                <td style="padding:5px">{{set.msheet.table[student._id][0] >= 0 ? set.msheet.table[student._id].coeff : ""}}</td>
+                <td class="{{getRemark(set.msheet.table[student._id][0]).css}}" style="padding:5px">{{set.msheet.table[student._id][0] >= 0 ? formatNumber(set.msheet.table[student._id][0] * set.msheet.table[student._id].coeff) : "0.0"}}</td>
+                <td style="padding:5px">{{set.rankings[student._id][termIndex]}}</td>
+                <td class="text-right" style="padding:5px"><strong>Term's Average:</strong></td>
+                <td  class="{{getRemark(set.msheet.table[student._id][0]).css}}" style="padding:5px">{{set.msheet.table[student._id][0] >= 0 ? formatNumber(set.msheet.table[student._id][0]) : "0.0"}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+    <div class="row">
+      <div class="col-md-4 transcript-summary">
+        <table class="table table-bordered table-striped table-transcript" ng-init="totals = mastersheet.getAcTotals(student._id)">
+          <tr>
+            <td>{{dict.total_mark}}:</td>
+            <td class="{{getRemark(data.msheet.table[student._id][0]).css}}">{{data.msheet.table[student._id][0] >= 0 ? formatNumber(data.msheet.table[student._id][0] * data.msheet.table[student._id].coeff) : "0.0"}}</td>
+          </tr>
+          <tr>
+            <td>{{dict.total_coeff}}:</td>
+            <td>{{data.msheet.table[student._id].coeff}}</td>
+          </tr>
+          <tr ng-show="termIndex < 2">
+            <td>{{data.terms[term]}} {{dict.annual_average}}:</td>
+            <td class="{{getRemark(data.msheet.table[student._id][0]).css}}">{{data.msheet.table[student._id][0] >= 0 ? data.msheet.table[student._id][0] : 0 | number:1}} / 20</td>
+            </tr>
+
+          <tr ng-show="termIndex == 2">
+            <td>Annual {{data.terms[term]}} {{dict.average}}:</td>
+            <td class="{{getRemark(data.combinedMarksheet.table[student._id][0]).css}}">{{data.combinedMarksheet.table[student._id][0] >= 0 ? data.combinedMarksheet.table[student._id][0] : 0 | number:1}} / 20</td>
+          </tr>
+          <tr>
+            <td>{{data.terms[term]}} {{dict.remark}}:</td>
+            <td class="{{getRemark(data.msheet.table[student._id][0]).css}}">{{dict[getRemark(data.msheet.table[student._id][0]).text]}}</td>
+          </tr>
+          <tr>
+            <td>{{dict.class_rank}}:</td>
+            <td>{{data.rankings.master[student._id][termIndex]}} / {{data.students.length}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4 transcript-summary">
+        <table class="table table-bordered table-striped table-transcript">
+          <tr>
+            <td>{{dict.hours_of_absence}}</td>
+            <td>{{data.dcard.absence}}</td>
+          </tr>
+          <tr>
+            <td>{{dict.attended_disciplinary_council}}</td>
+            <td>{{data.dcard.council}}</td>
+          </tr>
+          <tr>
+            <td>{{dict.warned}}</td>
+            <td>{{data.dcard.warned}}</td>
+          </tr>
+          <tr>
+            <td>{{dict.suspended}}</td>
+            <td>{{data.dcard.suspended}}</td>
+          </tr>
+          <tr ng-show="termIndex < 2">
+            <td>{{dict.promotion_status}}</td>
+            <td>
+                <span ng-if="student.status[2014] === 0">
+                  {{ data.msheet.table[student._id][0] < passingScore ? dict.fail : dict.pass}}
+                </span>
+                <span ng-if="student.status[2014] !== 0">
+                  {{PROMOTE_OPTIONS[student.status[2014]].name}}
+                </span>
+            </td>
+          </tr>
+
+          <tr ng-show="termIndex == 2">
+            <td>{{dict.promotion_status}}</td>
+            <td>
+                <span ng-if="student.status[2014] === 0">
+                  {{ data.combinedMarksheet.table[student._id][0] < passingScore ? dict.fail : dict.pass}}
+                </span>
+                <span ng-if="student.status[2014] !== 0">
+                  {{PROMOTE_OPTIONS[student.status[2014]].name}}
+                </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4 transcript-summary signature">
+        <table class="table table-bordered">
+          <tr style="">
+            <td rowspan="6" class="text-center" style="vertical-align:middle;color:#B2B2B2 !important;">{{dict.principals_signature}}</td>
+          </tr>
+          <tr class="signature-padding"></tr>
+          <tr class="signature-padding"></tr>
+          <tr class="signature-padding"></tr>
+          <tr class="signature-padding"></tr>
+          <tr class="signature-padding"></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p><a href="http://luminlabs.com" target="_blank">LuminLabs.com</a> | &copy; 2015</p>
+</div>

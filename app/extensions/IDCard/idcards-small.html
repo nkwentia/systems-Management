@@ -1,0 +1,161 @@
+<div class="row">
+  <div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+  <div class="col-md-10" ng-controller="IDcardCtrl">
+    <div class="noprint" style="padding-bottom:10px;">
+      <div ng-controller="ClassmenuCtrl">
+        <nav class="navbar navbar-default" role="navigation" style="margin-bottom:0px;">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left:5px;padding-right:5px;">
+              <form class="navbar-form navbar-left" role="search" style="padding-left:0px;width:100%;padding-right:0px;">
+                <div class="form-group">
+                  <div class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{lang === 'en' ? route.form['nameEn'] : route.form['nameFr']}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- <li>
+                          <a ng-click="search.form = ''">All Forms</a>
+                        </li>
+                        <li class="divider"></li> -->
+                        <li ng-repeat="(formIndex, form) in route.forms">
+                          <a ng-click="open({formIndex:formIndex})">
+                            {{lang === 'en' ? route.forms[formIndex].nameEn : route.forms[formIndex].nameFr}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Department Dropdown -->
+                    <div  class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{route.department['name'] || "Select Department"}}   <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- <li>
+                          <a ng-click="search.department = ''">All Departments</a>
+                        </li> -->
+                        <!-- <li class="divider"></li> -->
+                        <li ng-repeat="(deptId, dept) in route.departments">
+                          <a ng-click="open({deptId:deptId})">
+                            {{route.departments[deptId].name}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Group Dropdown -->
+                    <div  class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{route.group['name'] || "Select Group"}}
+                          <span class="caret"></span> 
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- <li>
+                          <a ng-click="search.group = ''">All Groups</a>
+                        </li>
+                        <li class="divider"></li> -->
+                        <li ng-repeat="(groupId, group) in route.groups">
+                          <a ng-click="open({groupId:groupId})">
+                            {{route.groups[groupId].name}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div  class="btn-group">
+                      <button class="btn btn-md btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{dict[data.sides[data.side]]}}
+                          <span class="caret"></span> 
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li ng-repeat="(index, side) in data.sides">
+                          <a ng-click="data.side=index">
+                            {{dict[side]}}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </div>  
+    </div>
+    <div ng-repeat="(studentIndex, student) in data.students | orderBy:'name'">
+      <div class="pagebreak"
+          style="height:6.2in !important;
+                  width:10.6in !important;
+                  background-color: #ddd !important;
+ 
+                  font-size:32px;" 
+          ng-if="data.side === 0">
+        <table>
+          <tr>
+            <td class="img-thumbnail">
+              <img src="images/user.svg" height="300" width="300">
+            </td>
+            <td style="text-align:center;padding-left:100px">
+              <p style="font-size:24px;"><b>{{dict.REPUBLIC_OF_CAMEROON}}</b><br>
+              {{dict.PeaceWorkFatherland}}</p>
+              <p style="font-size:24px;">{{dict.MINISTRY_OF_SECONDARY_EDUCATION}}</p>
+              <p style="font-size:24px;">{{dict.REGIONAL_DELEGATION_FOR_THE}} {{data.schoolInfo.region}}</p>
+              <p style="font-size:24px;"><b>{{lang === 'en' ? data.schoolInfo.nameEn : data.schoolInfo.nameFr}}</b><br>{{data.schoolInfo.subdivision}}, {{data.schoolInfo.division}} {{dict.division | uppercase}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <p></p>
+              <p style="font-size:48px;">{{dict.name}}: <u>{{student.name}}</u></p>
+              <p style="font-size:48px;">{{dict.student_id}}: _________________</p>
+              <p style="font-size:48px;">{{dict.date_of_birth}}: <u>{{student.birth | date: "dd MMM yyyy"}}</u></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row pagebreak" 
+          style="height:6.2in !important;
+                  width:10.6in !important;
+                  background-color: #ddd !important;
+ 
+                  font-size:32px;" 
+          ng-if="data.side === 1">
+          <div class="col-md-12">
+
+            
+            <div>
+              <p>{{dict.i}}, <u>{{data.schoolInfo.principal}}</u> {{dict.the_undersigned_principal_of}} <u>{{data.schoolInfo.nameEn}}</u> {{dict.hereby_certify_that}} <u>{{student.name}}</u> {{dict.is_a_student_in_my_institution}}.</p>
+              <p>{{dict.born_on}} <u>{{student.birth | date: "dd MMM yyyy"}}</u> at <u>{{student.birthplace}}</u>
+              <br>
+              {{student.sex === "Male" ? dict.son_of : dict.daughter_of}}<u>{{student.parentName}}</u>
+              <br>
+              {{dict.occupation}}:<u>{{student.parentOccupation}}</u>, {{dict.residence}}: <u>{{student.residence}}</u></p>
+              <p>{{dict.student_id}} ___________  {{dict.date}} <u>{{data.currentDate | date:"dd MMM yyyy"}}</u></p>
+              <br>
+              <p>
+                <table>
+                  <tr >
+                    <td style="padding-right:50px">__________________</td><td>__________________</td>
+                  </tr>
+                  <tr>
+                    <td style="padding-right:50px">{{dict.students_signature}}</td><td>{{dict.principals_signature}}</td>
+                  </tr>
+                </table>
+              </p>
+  
+          </div>
+        </div>
+      </div>
+
+
+    
+
+    </div>
+  </div>
+</div>

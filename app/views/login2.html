@@ -1,0 +1,35 @@
+<div class="login-box">
+	<form role="form form-signin"
+        ng-submit="login()">
+    <div class="form-group">
+      <label for="InputEmail">{{dict.name}}</label>
+      <input type="text" 
+             class="form-control" 
+             id="InputEmail" 
+             placeholder="{{dict.enter_name}}"
+             tabindex="1"
+             ng-model="tempUser.fullname">
+    </div>
+    <div class="form-group">
+      <label for="InputPassword">{{dict.password}}</label>
+      <input type="password"
+             class="form-control" 
+             id="InputPassword" 
+             placeholder="{{dict.password}}"
+             tabindex="2"
+             ng-model="tempUser.password"
+             ng-keypress="checkCapsLock($event)">
+    </div>
+    <div class="alert alert-sm alert-warning" style="height:22px;padding-top:1px;position:absolute;"  ng-if="capsLock">
+        <i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;
+        <strong>{{dict.warning}}: </strong>{{dict.caps_lock_is_on}}.
+    </div>
+    <div ng-if="status === 200">&nbsp;</div>
+    <div ng-if="status === 404" style="color:red;">{{dict.user_not_found}}</div>
+    <div ng-if="status === 401" style="color:red;">{{dict.incorrect_password}}</div>
+    <div ng-if="status === 403" style="color:red;">{{dict.access_denied}}</div>
+    <br>
+    <button type="submit" class="btn btn-default">{{dict.submit}}</button>
+  </form>
+</div>
+

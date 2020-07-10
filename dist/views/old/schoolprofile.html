@@ -1,0 +1,301 @@
+<div class="row">
+  <div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+  <div class="col-md-10 marksheet" ng-controller="SchoolProfileCtrl">
+  <div class="printonly"><h3>School Profile</h3></div>
+  <table>
+  <tr>
+  <td class="col-md-7" 
+         style="border-right:solid 1px #ddd !important;">
+
+  <form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="uid" class="col-sm-3 control-label">School ID</label>
+    <div class="col-sm-9 printonly">{{data.school._id}}</div>
+    <div class="col-sm-9 noprint">
+      <div class="form-control-static">{{data.school._id}}</div>
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="nameEn" class="col-sm-3 control-label">School Name (English)</label>
+    <div class="col-sm-9 printonly">{{data.school.nameEn}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="nameEn"
+           class="form-control" 
+           placeholder="School Name (English)"
+           ng-readonly="!editing"
+           ng-model="data.school.nameEn">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="nameFr" class="col-sm-3 control-label">School Name (French)</label>
+    <div class="col-sm-9 printonly">{{data.school.nameFr}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="nameFr"
+           class="form-control" 
+           placeholder="School Name (French)"
+           ng-readonly="!editing"
+           ng-model="data.school.nameFr">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="version" class="col-sm-3 control-label">School Type</label>
+    <div class="col-sm-9 printonly">{{data.school.version}}</div>
+    <div class="col-sm-9">
+      <div class="btn-group">
+        <button class="{{editing ? '' : 'disabled'}} btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" ng-readonly="!editing">
+          <span>{{data.versions[data.school.version].name}}</span>
+          &nbsp;<span ng-if="editing" class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-repeat="(versionId,version) in data.versions">
+            <a ng-click="data.school.version = versionId">{{version.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="principal" class="col-sm-3 control-label">Principal</label>
+    <div class="col-sm-9 printonly">{{data.school.principal}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="principal"
+           class="form-control" 
+           placeholder="Principal's Name"
+           ng-readonly="!editing"
+           ng-model="data.school.principal">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="division" class="col-sm-3 control-label">Division</label>
+    <div class="col-sm-9 printonly">{{data.school.division}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="division"
+           class="form-control" 
+           placeholder="Division"
+           ng-readonly="!editing"
+           ng-model="data.school.division">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="subdivision" class="col-sm-3 control-label">Subdivision</label>
+    <div class="col-sm-9 printonly">{{data.school.subdivision}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="subdivision"
+           class="form-control" 
+           placeholder="Subdivision"
+           ng-readonly="!editing"
+           ng-model="data.school.subdivision">
+    </div>
+  </div>
+   <!-- <div class="form-group">
+    <label for="numFemale" class="col-sm-3 control-label">Number of Females</label>
+    <div class="col-sm-9 printonly">{{data.school.numFemaleCycle1 + data.school.numFemaleCycle2}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="numFemale"
+           class="form-control" 
+           type="number"
+           placeholder="Number of Females"
+           ng-readonly="!editing"
+           ng-model="data.school.numFemaleCycle1 + data.school.numFemaleCycle2">
+    </div>
+  </div>  -->
+
+   <div class="form-group">
+    <label for="numFemaleCycle1" class="col-sm-3 control-label">Number of Females First Cycle</label>
+    <div class="col-sm-9 printonly">{{data.school.numFemaleCycle1}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="numFemaleCycle1"
+           class="form-control" 
+           type="number"
+           placeholder="Number of Females First Cycle"
+           ng-readonly="!editing"
+           ng-model="data.school.numFemaleCycle1">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="numFemaleCycle2" class="col-sm-3 control-label">Number of Females Second Cycle</label>
+    <div class="col-sm-9 printonly">{{data.school.numFemaleCycle2}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="numFemaleCycle2"
+           class="form-control" 
+           type="number"
+           placeholder="Number of Females Second Cycle"
+           ng-readonly="!editing"
+           ng-model="data.school.numFemaleCycle2">
+    </div>
+  </div>
+ <!--  <div class="form-group">
+    <label for="numMale" class="col-sm-3 control-label">Number of Males</label>
+    <div class="col-sm-9 printonly">{{data.school.numMaleCycle1 + data.school.numMaleCycle2}}</div>
+    <label for="numFemale" class="col-sm-3 control-label">Number of Females</label>
+    <div class="col-sm-9 printonly">{{data.school.numFemale}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="numFemale"
+           class="form-control" 
+           type="number"
+           placeholder="Number of Females"
+           ng-readonly="!editing"
+           ng-model="data.school.numFemale">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="numMale" class="col-sm-3 control-label">Number of Males</label>
+    <div class="col-sm-9 printonly">{{data.school.numMale}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="numMale"
+           class="form-control" 
+           type="number"
+           placeholder="Number of Males"
+           ng-readonly="!editing"
+           ng-model="data.school.numMale">
+    </div>
+  </div>  -->
+  </div>
+  <div class="form-group">
+    <label for="numMaleCycle1" class="col-sm-3 control-label">Number of Males First Cylce</label>
+    <div class="col-sm-9 printonly">{{data.school.numMaleCycle1}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="numMaleCycle1"
+           class="form-control" 
+           type="number"
+           placeholder="Number of Males First Cycle"
+           ng-readonly="!editing"
+           ng-model="data.school.numMaleCycle1">
+    </div>
+  </div>
+   <div class="form-group">
+    <label for="numMaleCycle2" class="col-sm-3 control-label">Number of Males Second Cylce</label>
+    <div class="col-sm-9 printonly">{{data.school.numMaleCycle2}}</div>
+    <div class="col-sm-9 noprint">
+      <input id="numMaleCycle2"
+           class="form-control" 
+           type="number"
+           placeholder="Number of Males Second Cycle"
+           ng-readonly="!editing"
+           ng-model="data.school.numMaleCycle2">
+    </div>
+  </div>
+  <br>
+  <div class="form-group noprint" ng-if="!editing">
+    <div class="col-sm-offset-3 col-sm-10">
+      <button type="submit" class="btn btn-info" ng-click="edit()">
+        Edit School
+      </button>
+    </div>
+  </div>
+  <div class="form-group noprint" ng-if="editing">
+    <div class="col-sm-offset-3 col-sm-10">
+      <button type="submit" class="btn btn-success" ng-click="save(data.school)">
+        Save Changes
+      </button>
+      <button type="submit" class="btn btn-warning" style="margin-left:15px;" ng-click="cancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>
+</td>
+<td class="col-md-5">
+  <form class="form-horizontal noprint" role="form">
+        <ul class="nav nav-tabs" style="margin-bottom:10px;">
+          <li class="{{multiplier === 1 ? 'active' : ''}}">
+            <a ng-click="multiplier = 1; newPayment.amount = 0">New Payment</a>
+          </li>
+          <li class="{{multiplier === -1 ? 'active' : ''}}">
+            <a ng-click="multiplier = -1; newPayment.amount = 0">New Correction</a>
+          </li>
+        </ul>
+        <div ng-if="multiplier === 1" class="form-group" style="margin-bottom:0px;">
+          <div class="col-sm-8">
+            <div class="input-group" >
+              <span class="input-group-addon">CFA</span>
+              <input type="text"
+                     format="number"
+                     prefix="{{multiplier < 0 ? '-' : ''}}"
+                     name="amount"
+                     ng-model="newPayment.amount"
+                     required
+                     class="form-control">
+            </div>
+              <span style="color:red;font-size:12px;"
+              ng-if="getTotalPayments() + newPayment.getAmount() > 
+                     data.school.totalFee">
+                Payment can't be greater than amount due
+              </span>
+          </div>
+          <div class="col-sm-4">
+            <button type="submit" 
+                    class="btn btn-success" 
+                    ng-click="addPayment(newPayment, 1)"
+                    ng-class="[0,'0.00'].indexOf(newPayment.amount) > -1 || 
+                              getTotalPayments() + newPayment.getAmount() > 
+                              data.school.totalFee ? 'disabled' : ''">
+              Add Payment
+            </button>
+          </div>
+        </div>
+        <div ng-if="multiplier === -1" class="form-group" style="margin-bottom:0px;">
+          <div class="col-sm-8">
+            <div class="input-group" >
+              <span class="input-group-addon">CFA</span>
+              <input type="text"
+                     style="color:red;"
+                     format="number"
+                     prefix="-"
+                     name="amount"
+                     ng-model="newPayment.amount"
+                     required
+                     class="form-control">
+            </div>
+              <span style="color:red;font-size:12px;" ng-if="newPayment.getAmount() > getTotalPayments()">
+                Correction can't be greater than total payments
+              </span>
+          </div>
+          <div class="col-sm-4">
+            <button type="submit" 
+                    class="btn btn-warning" 
+                    ng-click="addPayment(newPayment, -1)"
+                    ng-class="[0,'0.00'].indexOf(newPayment.amount) > -1 || 
+                              newPayment.getAmount() > getTotalPayments() ? 'disabled' : ''">
+              Add Correction
+            </button>
+          </div>
+        </div>
+
+      </form>
+      <table class="table table-striped">
+        <tr class="row-spacer">
+          <th>Payments</th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="(paymentIndex, payment) in data.payments">
+          <td>{{payment.date | date:'MMM d, yy h:mm a'}}</td>
+          <td style="color:{{payment.amount < 0 ? 'red' : 'black'}};">{{payment.amount | currency:""}}</td>
+        </tr>
+        <tr class="row-spacer">
+          <th>Summary</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>Fee Amount:</td>
+          <td>{{data.school.totalFee | currency:""}}</td>
+        </tr>
+        <tr>
+          <td>Total Paid:</td>
+          <td style="font-weight:bold;">{{getTotalPayments() | currency:""}}</td>
+        </tr>
+        <tr class="danger">
+          <td>Due:</td>
+          <td style="color:red;">{{data.school.totalFee -getTotalPayments()  | currency:""}}</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+  </div>
+	
+</div>	
+

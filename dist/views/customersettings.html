@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+
+  <div class="col-md-10 marksheet" ng-controller="SettingsCtrl">
+
+  <div class="row">
+  	<div class="col-md-7" style="border-right:solid 1px #ddd;">
+      <h3>Access</h3>
+  	  <table class="table">
+  	  	<thead>
+  	  		<tr>
+  	  			<td ng-repeat="role in roles" ng-if="role.nameEn !== 'Sales'">{{role.nameEn}}</td>
+  	  		</tr>
+  	  	</thead>
+  	  	<tbody>
+  	  		<tr>
+  	  			<td ng-repeat="(roleKey, role) in roles" ng-if="role.nameEn !== 'Sales'">
+  	  			  <button ng-click="toggle(roleKey)"
+										  class="btn btn-md btn-light" style="border:solid 1px #ddd;">
+									<i ng-if="settings.access[roleKey] === 0" 
+									   class="glyphicon glyphicon-minus" 
+									   style="color:red;"></i>
+									 <i ng-if="settings.access[roleKey] === 1" 
+								   class="glyphicon glyphicon-ok" 
+								   style="color:green;"></i>
+								</button>
+  	  			</td>
+  	  		</tr>
+  	  	</tbody>
+  	  </table>
+  	</div>
+  	<div class="col-md-5"></div>
+  </div> 
+  <div class="row">
+    <div class="col-md-12" style="border-right:solid 1px #ddd;">
+      <h3>Add-ons</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <td ng-repeat="extension in availableExtensions" ng-if="extension.name !== 'Main'">{{extension.name}}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td ng-repeat="extension in availableExtensions" ng-if="extension.name !== 'Main'">
+              <button ng-click="toggle(extension)"
+                      class="btn btn-md btn-light" style="border:solid 1px #ddd;">
+                  <i ng-if="settings.extensions.indexOf(extension.name) === -1" 
+                     class="glyphicon glyphicon-minus" 
+                     style="color:red;"></i>
+                   <i ng-if="settings.extensions.indexOf(extension.name) > -1" 
+                   class="glyphicon glyphicon-ok" 
+                   style="color:green;"></i>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+	
+</div>	
+

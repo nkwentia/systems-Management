@@ -1,0 +1,68 @@
+<div class="row ">
+	<div class="col-md-2" ng-include="'views/_navstacked.html'"></div>
+	<div class="col-md-10 marksheet" ng-controller="GroupsCtrl">
+		<div class="printonly"><h3>{{dict.classes}}</h3></div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr class="toolbar noprint">
+					<th>
+	    				<input type="text" 
+	    							 class="form-control" 
+	    							 placeholder="{{dict.class_name}}"
+	    							 ng-model="newGroup.name">
+	    			</th>
+	    			
+	    			<th class="text-center">
+	    				<button type="submit" class="btn btn-default" ng-click="add(newGroup)">
+				        	{{dict.add}}
+				        </button>
+	    			</th>
+	    			<th>
+		    			<div class="alert alert-sm alert-warning noprint" style="height:25px;padding-top:0px;" ng-if="validationError">
+	   						<i class="glyphicon glyphicon-exclamation-sign"></i>
+	   						<strong>{{dict.Class}} {{dict.not_added}}.</strong> {{dict.duplicate_codes_are_not_allowed}}.
+	   			  		</div>
+   			  		</th>
+   			  		<th></th>
+   			  		<th></th>
+				</tr>
+				<tr>
+					<th colspan="3">{{dict.name}}</th>
+					<!-- <th class="text-center" ng-repeat="form in forms">{{form.name}}</th> -->
+					<th>{{dict.student}}s</th>
+					<th class="noprint">{{dict.remove}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(groupKey, group) in groups">
+					<td class="column readonly" style="vertical-align:middle;" colspan="3">
+						<div style="padding-left:10px;font-weight:bold;font-size:1.2em;">{{group.name}}</div>
+					</td>
+					<!-- <td ng-repeat="(formIndex, form) in group.forms"
+						class="text-center">
+						<button ng-click="group.toggleForm(formIndex)"
+								class="btn btn-md btn-light" style="border:solid 1px #ddd;">
+							<i ng-if="form.active === 0" 
+							   class="glyphicon glyphicon-minus" 
+							   style="color:red;"></i>
+							 <i ng-if="form.active === 1" 
+						   class="glyphicon glyphicon-ok" 
+						   style="color:green;"></i>
+						</button>
+					</td> -->
+					<td class="text-center"
+							style="width:100px;">
+						{{allStudents[groupKey].length}}
+					</td>
+					<td class="remove text-center noprint" 
+							style="width:80px;">
+						<a ng-click="remove(group)"
+							 ng-if="allStudents[groupKey].length === 0">
+							<i class="glyphicon glyphicon-remove"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

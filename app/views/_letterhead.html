@@ -1,0 +1,33 @@
+<!-- School Name Letterhead -->
+   <table class="table letterhead" style="border:none;">
+  	<tr style="border:none;">
+  		<td class="text-center title-flank french" style="border:none;">
+        <h6>REPUBLIQUE DU CAMEROUN<br>
+        <div style="font-size:10px"><i>PAIX - TRAVAIL - PATRIE</i></div></h6>
+        <h6>MINISTERE DES ENSEIGNEMENTS SECONDAIRES<br>
+        DELEGATION REGIONALE DU {{regions[data.schoolInfo.region].nameFr}}<br>
+        DELEGATION DEPARTMENTALE DE LA {{data.schoolInfo.division}}</h6>
+        <h5><strong>{{data.schoolInfo.nameFr}}</strong></h5>
+      </td>
+  		<td class="text-center title-main" style="border:none;">
+        <img src="images/logo.png" style="width:100px">
+			  <h4  style="margin-top:10px;">
+			  	<strong class="english">{{pageTitleEnglish}}</strong> - 
+			  	<strong class="french">{{pageTitleFrench}}</strong>
+			  </h4>
+  		</td>
+      <td class="text-center title-flank" style="border:none;">
+        <h6>REPUBLIC OF CAMEROON<br>
+        <div style="font-size:10px"><i>PEACE - WORK - FATHERLAND</i></div></h6>
+        <h6>MINISTRY OF SECONDARY EDUCATION<br>
+        REGIONAL DELGATION FOR THE {{regions[data.schoolInfo.region].nameEn}}<br>
+        DIVISIONAL DELEGATION FOR {{data.schoolInfo.division}}</h6>
+        <h5><strong>{{data.schoolInfo.nameEn}}</strong></h5>
+      </td>
+    </tr>
+    <tr class="title-flank" style="border:none;">
+      <td colspan="3" style="border:none">
+        <h6>Ref No:{{data.schoolInfo.refno !== '' ? data.schoolInfo.refno : '_______________'}}/MINESEC/RDSE/{{data.schoolInfo.region}}/DDSE/{{data.schoolInfo.division}}/{{data.schoolInfo.nameEn}}/{{data.schoolInfo.subdivision}}</h6>
+      </td>
+    </tr>
+	</table>
